@@ -4,7 +4,7 @@ import { getAdminProductById } from '@/data/admin/products'
 import { SeoEditor } from '@/components/admin/forms/SeoEditor'
 import { RichTextEditor } from '@/components/admin/forms/RichTextEditor'
 import { useState } from 'react'
-import type { AdminSEO, AdminProduct } from '@/types/admin'
+import type { AdminProduct, AdminSEO, ProductStatus } from '@/types/admin'
 import { Save, ArrowLeft, Eye, Copy } from 'lucide-react'
 
 export default function AdminProductFormPage() {
@@ -46,7 +46,7 @@ export default function AdminProductFormPage() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 rounded-lg border border-night/10 px-3 py-2">
             <label className="font-body text-xs text-text-muted">Status:</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)} className="border-0 bg-transparent font-body text-sm text-night focus:outline-none">
+            <select value={status} onChange={(e) => setStatus(e.target.value as ProductStatus)} className="border-0 bg-transparent font-body text-sm text-night focus:outline-none">
               <option value="draft">Draft</option>
               <option value="published">Published</option>
               <option value="archived">Archived</option>
@@ -70,7 +70,7 @@ export default function AdminProductFormPage() {
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <label className="mb-1 block font-body text-xs font-medium text-text-muted">Brand</label>
-                  <select value={brand} onChange={(e) => setBrand(e.target.value)} className="w-full rounded-lg border border-night/10 px-4 py-2.5 font-body text-sm text-night focus:border-primary/30 focus:outline-none focus:ring-1 focus:ring-primary/20">
+                  <select value={brand} onChange={(e) => setBrand(e.target.value as 'girilal' | 'arunima')} className="w-full rounded-lg border border-night/10 px-4 py-2.5 font-body text-sm text-night focus:border-primary/30 focus:outline-none focus:ring-1 focus:ring-primary/20">
                     <option value="girilal">Giri Lal Prem Chand Sarees</option>
                     <option value="arunima">Arunima Fashions</option>
                   </select>

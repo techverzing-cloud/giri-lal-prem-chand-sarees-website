@@ -16,6 +16,7 @@ interface GalleryLightboxProps {
 export function GalleryLightbox({
   isOpen,
   images,
+  currentIndex,
   productName,
   onClose,
   onGoTo,

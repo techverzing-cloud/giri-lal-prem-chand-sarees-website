@@ -61,7 +61,7 @@ export function AnalyticsCard({ analytics }: AnalyticsCardProps) {
 
       <div className="space-y-2">
         {providers.map((provider) => (
-          <AnalyticsProviderRow key={provider.name} {...provider} />
+          <AnalyticsProviderRow key={provider.name} {...provider} configured={!!provider.id} />
         ))}
       </div>
     </div>

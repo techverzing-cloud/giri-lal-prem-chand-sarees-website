@@ -1,24 +1,27 @@
+import { createElement } from 'react'
 import type { ContentBlock } from '@/types/journal'
 import { QuoteBlock } from './QuoteBlock'
 import { GalleryBlock } from './GalleryBlock'
 import { CalloutBlock } from './CalloutBlock'
+
+const headingMap = { 1: 'h1', 2: 'h2', 3: 'h3', 4: 'h4' } as const
 
 export function RichArticleRenderer({ blocks }: { blocks: ContentBlock[] }) {
   return (
     <div className="space-y-6 md:space-y-8">
       {blocks.map((block, index) => {
         switch (block.type) {
-          case 'heading':
-            const Tag = `h${block.level}` as keyof JSX.IntrinsicElements
+          case 'heading': {
+            const Tag = headingMap[block.level]
             const size = block.level === 1 ? 'text-3xl md:text-4xl' :
               block.level === 2 ? 'text-2xl md:text-3xl' :
               block.level === 3 ? 'text-xl md:text-2xl' :
               'text-lg md:text-xl'
-            return (
-              <Tag key={index} className={`font-heading font-medium text-night leading-tight mt-8 mb-4 first:mt-0 ${size}`}>
-                {block.text}
-              </Tag>
-            )
+            return createElement(Tag, {
+              key: index,
+              className: `font-heading font-medium text-night leading-tight mt-8 mb-4 first:mt-0 ${size}`,
+            }, block.text)
+          }
 
           case 'paragraph':
             return (

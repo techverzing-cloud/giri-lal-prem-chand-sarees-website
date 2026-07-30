@@ -1,5 +1,6 @@
 import type { Product } from '@/types'
 import { siteConfig } from '@/config/site'
+import { cn } from '@/utils/cn'
 
 interface ProductInfoProps {
   product: Product

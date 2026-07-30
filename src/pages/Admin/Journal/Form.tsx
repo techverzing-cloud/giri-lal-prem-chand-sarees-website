@@ -5,7 +5,7 @@ import { RichTextEditor } from '@/components/admin/forms/RichTextEditor'
 import { SeoEditor } from '@/components/admin/forms/SeoEditor'
 import type { AdminSEO } from '@/types/admin'
 import { useState } from 'react'
-import { Save, ArrowLeft, Calendar } from 'lucide-react'
+import { Save, ArrowLeft, Calendar, Eye } from 'lucide-react'
 
 export default function AdminJournalFormPage() {
   const { id } = useParams()

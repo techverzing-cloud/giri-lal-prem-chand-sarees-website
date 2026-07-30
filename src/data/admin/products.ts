@@ -2,14 +2,17 @@ import type { AdminProduct } from '@/types/admin'
 
 const now = new Date().toISOString()
 
+const productNames = ['Royal Banarasi Heritage', 'Crimson Bridal Silk', 'Ivory Wedding Grace', 'Ruby Celebration Silk', 'Golden Wedding Zari', 'Peach Blossom Bridal', 'Emerald Silk Elegance', 'Sapphire Blue Banarasi', 'Rose Gold Tissue', 'Sunset Kanjivaram', 'Majestic Peacock Silk', 'Pearl White Georgette', 'Blush Pink Organza', 'Royal Blue Brocade', 'Gold Tissue Lehenga', 'Black Velvet Lehenga', 'Pastel Dream Lehenga', 'Red Bridal Masterpiece', 'Green Emerald Lehenga', 'Floral Print Lehenga']
+
 export const adminProducts: AdminProduct[] = Array.from({ length: 50 }, (_, i) => ({
   id: `prod-${String(i + 1).padStart(3, '0')}`,
-  name: ['Royal Banarasi Heritage', 'Crimson Bridal Silk', 'Ivory Wedding Grace', 'Ruby Celebration Silk', 'Golden Wedding Zari', 'Peach Blossom Bridal', 'Emerald Silk Elegance', 'Sapphire Blue Banarasi', 'Rose Gold Tissue', 'Sunset Kanjivaram', 'Majestic Peacock Silk', 'Pearl White Georgette', 'Blush Pink Organza', 'Royal Blue Brocade', 'Gold Tissue Lehenga', 'Black Velvet Lehenga', 'Pastel Dream Lehenga', 'Red Bridal Masterpiece', 'Green Emerald Lehenga', 'Floral Print Lehenga'][i % 20],
+  name: productNames[i % 20],
   slug: `product-${i + 1}`,
   brand: i % 2 === 0 ? 'girilal' : 'arunima',
   category: ['wedding', 'bridal', 'silk', 'banarasi', 'designer', 'party', 'festive', 'cotton', 'handloom', 'printed', 'bridal', 'designer', 'reception', 'cocktail', 'engagement'][i % 15],
   subcategory: i % 2 === 0 ? 'traditional' : 'bridal',
   fabric: ['Banarasi Silk', 'Pure Silk', 'Kanchipuram Silk', 'Georgette', 'Organza', 'Silk Velvet', 'Net', 'Cotton Silk', 'Tissue', 'Brocade'][i % 10],
+  description: `A stunning ${productNames[i % 20].toLowerCase()} crafted from premium fabric.`,
   price: [185000, 220000, 250000, 195000, 175000, 145000, 285000, 320000, 295000, 265000][i % 10],
   colors: ['red', 'gold', 'maroon', 'ivory', 'pink', 'green', 'blue', 'peach'].slice(0, (i % 4) + 2),
   occasion: ['wedding', 'bridal', 'festive', 'party', 'engagement', 'cocktail'][i % 6],

@@ -50,7 +50,7 @@ export function ImageComponent({
           width={width}
           height={height}
           loading={priority ? 'eager' : 'lazy'}
-          fetchpriority={priority ? 'high' : undefined}
+          fetchPriority={priority ? 'high' : undefined}
           decoding="async"
           onLoad={() => setLoaded(true)}
           onError={() => setError(true)}

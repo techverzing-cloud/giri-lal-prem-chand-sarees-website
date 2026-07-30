@@ -257,7 +257,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
       { type: 'paragraph', text: 'Zardozi embroidery originated in Persia and was brought to India during the Mughal era. It was used to adorn the robes of emperors, the trappings of royal elephants, and the tents of Mughal courts. The technique involves stitching gold and silver threads onto fabric, often embellished with pearls and precious stones.' },
       { type: 'quote', text: 'Zardozi is not embroidery — it is sculpting with thread. Every piece is a bas-relief in gold, a testament to the artisan\'s ability to transform flat fabric into dimensional art.', attribution: 'Meera Devi, Zardozi Artisan' },
       { type: 'heading', level: 3, text: 'The Process' },
-      { type: 'numberList', items: ['Design tracing onto the fabric', 'Frame setup — fabric stretched tightly on a wooden frame', 'Main embroidery using zari threads and needles', 'Adding dimensional elements — coils, sequins, beads', 'Finishing — trimming, pressing, and quality inspection'] },
+      { type: 'numberedList', items: ['Design tracing onto the fabric', 'Frame setup — fabric stretched tightly on a wooden frame', 'Main embroidery using zari threads and needles', 'Adding dimensional elements — coils, sequins, beads', 'Finishing — trimming, pressing, and quality inspection'] },
       { type: 'callout', variant: 'info', text: 'A single zardozi piece can take weeks or even months to complete, depending on the complexity of the design. The finest pieces can have up to 15 different types of stitches.' },
     ],
   },

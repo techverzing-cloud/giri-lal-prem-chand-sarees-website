@@ -74,13 +74,11 @@ export function EnquiryModal({ isOpen, onClose, product }: EnquiryModalProps) {
       referralSource: '',
       agreedToPrivacy: true,
     }, {
-      product: {
-        id: product.id,
-        name: product.name,
-        sku: product.sku,
-        brand: brandName,
-        price: product.price,
-      },
+      id: product.id,
+      name: product.name,
+      sku: product.sku,
+      brand: brandName,
+      price: product.price,
     })
 
     const result = await enquiry.submit(payload)

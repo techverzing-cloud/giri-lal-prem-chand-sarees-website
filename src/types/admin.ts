@@ -67,6 +67,7 @@ export interface AdminProduct {
   category: string
   subcategory: string
   fabric: string
+  description: string
   price: number
   colors: string[]
   occasion: string
