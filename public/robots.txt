@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin-preview/
+Disallow: /500
+Disallow: /offline
+
+Sitemap: https://girilalpremchand.com/sitemap.xml
