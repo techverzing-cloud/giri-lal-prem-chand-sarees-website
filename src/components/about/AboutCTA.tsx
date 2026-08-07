@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Container } from '@/components/ui/Container'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
 import { getWhatsAppUrl } from '@/utils/helpers'
-
+//Nothing to commit
 export function AboutCTA() {
   return (
     <section className="relative overflow-hidden bg-night py-section">
