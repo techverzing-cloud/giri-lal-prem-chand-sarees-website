@@ -4,6 +4,7 @@ import { Container } from '@/components/ui/Container'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
 import { getWhatsAppUrl } from '@/utils/helpers'
 //Nothing to commit
+//Nothing to commit again
 export function AboutCTA() {
   return (
     <section className="relative overflow-hidden bg-night py-section">
@@ -45,7 +46,7 @@ export function AboutCTA() {
             </Link>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8"> //This division is for the WhatsApp link
             <a
               href={getWhatsAppUrl()}
               target="_blank"
@@ -60,3 +61,4 @@ export function AboutCTA() {
     </section>
   )
 }
+
