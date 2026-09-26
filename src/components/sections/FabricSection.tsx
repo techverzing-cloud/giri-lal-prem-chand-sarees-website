@@ -3,6 +3,7 @@ import { Container } from '@/components/ui/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { FABRICS } from '@/constants/home'
 
+
 const icons: Record<string, React.ReactNode> = {
   silk: (
     <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="size-10">
@@ -83,9 +84,13 @@ export function FabricSection() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group rounded-lg border border-night/5 bg-white p-8 transition-all duration-500 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
             >
-              <div className="text-primary/50 transition-colors duration-500 group-hover:text-primary">
-                {icons[fabric.icon]}
-              </div>
+              <div
+                  className="h-40 w-full bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url(${fabric.image})`,
+                  }}
+                >
+                </div>
               <h3 className="mt-6 font-heading text-xl text-night">{fabric.label}</h3>
               <p className="mt-3 font-body text-sm leading-relaxed text-text-secondary">
                 {fabric.description}

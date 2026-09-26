@@ -51,7 +51,9 @@ export function FeaturedProducts() {
                         className="h-full w-full bg-gradient-to-br from-primary/5 to-accent/5 transition-transform duration-700 group-hover:scale-110"
                         style={{
                           backgroundImage:
-                            'url("data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M0 40L40 0H20L0 20M40 40V20L20 40\'/%3E%3C/g%3E%3C/svg%3E")',
+                            `url(${product.image})`,
+                             backgroundPosition: 'center center',
+                             backgroundSize: 'cover',
                         }}
                       />
                     </div>

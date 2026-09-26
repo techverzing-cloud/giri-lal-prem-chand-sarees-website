@@ -7,11 +7,15 @@ import { CategoryGrid } from '@/components/shop/CategoryGrid'
 import { ProductGrid } from '@/components/shop/ProductGrid'
 import { getCategoriesByBrand, CATEGORIES } from '@/data/categories'
 import { getFeaturedProducts } from '@/data/products'
+import { SAREE_PAGE_FEATURED_IMAGES, withFeaturedImages } from '@/data/products/images'
 import { siteConfig } from '@/config/site'
 
 export default function SareesPage() {
   const sareeCategories = getCategoriesByBrand('girilal')
-  const featured = getFeaturedProducts('girilal').slice(0, 4)
+  const featured = withFeaturedImages(
+    getFeaturedProducts('girilal').slice(0, 4),
+    SAREE_PAGE_FEATURED_IMAGES
+  )
 
   return (
     <PageTransition>

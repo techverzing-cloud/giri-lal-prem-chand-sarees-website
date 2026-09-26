@@ -1,4 +1,5 @@
 import type { Product } from '@/types'
+import { resolveProductImages } from '../images'
 
 function p(
   id: string, name: string, slug: string, category: string, subcategory: string,
@@ -8,12 +9,7 @@ function p(
   return {
     id, name, slug, brand: 'arunima', category, subcategory, fabric, price,
     description: `Discover the exquisite ${name} from Arunima Fashions. Meticulously crafted from premium ${fabric}, this designer piece embodies contemporary elegance while honoring traditional craftsmanship. Perfect for ${occasion} occasions, it represents the pinnacle of luxury fashion for the modern woman.`,
-    images: [
-      `/products/lehengas/${category}/1.jpg`,
-      `/products/lehengas/${category}/2.jpg`,
-      `/products/lehengas/${category}/3.jpg`,
-      `/products/lehengas/${category}/4.jpg`,
-    ],
+    images: resolveProductImages(id),
     colors, occasion, featured, new: isNew, available: true,
     sku: `AF-L-${id.toUpperCase()}`,
     tags,

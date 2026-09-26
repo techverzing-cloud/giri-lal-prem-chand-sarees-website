@@ -1,4 +1,5 @@
 import type { Product } from '@/types'
+import { resolveProductImages } from '../images'
 
 function p(
   id: string, name: string, slug: string, category: string, subcategory: string,
@@ -8,12 +9,7 @@ function p(
   return {
     id, name, slug, brand: 'girilal', category, subcategory, fabric, price,
     description: `Experience the timeless elegance of ${name}, a masterpiece from Giri Lal Prem Chand Sarees. Crafted from the finest ${fabric}, this exquisite piece embodies the rich textile heritage of India. Perfect for ${occasion} occasions, it showcases meticulous craftsmanship and attention to detail that has defined our legacy since 1946.`,
-    images: [
-      `/products/sarees/${category}/1.jpg`,
-      `/products/sarees/${category}/2.jpg`,
-      `/products/sarees/${category}/3.jpg`,
-      `/products/sarees/${category}/4.jpg`,
-    ],
+    images: resolveProductImages(id),
     colors, occasion, featured, new: isNew, available: true,
     sku: `GLP-S-${id.toUpperCase()}`,
     tags,

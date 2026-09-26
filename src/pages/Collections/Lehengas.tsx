@@ -7,11 +7,15 @@ import { CategoryGrid } from '@/components/shop/CategoryGrid'
 import { ProductGrid } from '@/components/shop/ProductGrid'
 import { getCategoriesByBrand } from '@/data/categories'
 import { getFeaturedProducts } from '@/data/products'
+import { LEHENGA_PAGE_FEATURED_IMAGES, withFeaturedImages } from '@/data/products/images'
 import { siteConfig } from '@/config/site'
 
 export default function LehengasPage() {
   const lehengaCategories = getCategoriesByBrand('arunima')
-  const featured = getFeaturedProducts('arunima').slice(0, 4)
+  const featured = withFeaturedImages(
+    getFeaturedProducts('arunima').slice(0, 4),
+    LEHENGA_PAGE_FEATURED_IMAGES
+  )
 
   return (
     <PageTransition>

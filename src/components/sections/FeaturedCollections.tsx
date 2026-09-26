@@ -31,15 +31,13 @@ function CollectionCard({
     >
       <Link to={href} className="block">
         <div className="relative aspect-[3/4] overflow-hidden md:aspect-[4/5]">
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-night/80 via-night/20 to-transparent transition-all duration-700 group-hover:from-night/90"
+          <img
+            src={image}
+            alt={title}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div
-            className="h-full w-full bg-gradient-to-br from-primary/10 to-accent/10 transition-transform duration-700 group-hover:scale-110"
-            style={{
-              backgroundImage:
-                'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-            }}
+            className="absolute inset-0 bg-gradient-to-t from-night/80 via-night/20 to-transparent transition-all duration-700 group-hover:from-night/90"
           />
           <div className="absolute left-4 top-4">
             <LuxuryBadge variant="primary" size="sm">

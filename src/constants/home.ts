@@ -1,3 +1,5 @@
+import { imageZoom } from "@/utils/animations"
+
 export const HERO = {
   headline: 'Timeless Elegance Since 1946',
   subheading:
@@ -38,7 +40,7 @@ export const FEATURED_COLLECTIONS = [
     id: 'wedding-sarees',
     title: 'Wedding Sarees',
     description: 'Exquisite bridal sarees adorned with intricate zari and hand-embroidered details.',
-    image: '/collections/wedding-sarees.jpg',
+    image: '/collections/Wedding-saree.jpg',
     href: '/collections/sarees',
     tag: 'Bridal',
   },
@@ -62,7 +64,7 @@ export const FEATURED_COLLECTIONS = [
     id: 'designer-sarees',
     title: 'Designer Sarees',
     description: 'Contemporary designer sarees blending tradition with modern aesthetics.',
-    image: '/collections/designer-sarees.jpg',
+    image: '/collections/designer-saree.jpg',
     href: '/collections/sarees',
     tag: 'Designer',
   },
@@ -70,7 +72,7 @@ export const FEATURED_COLLECTIONS = [
     id: 'party-wear',
     title: 'Party Wear',
     description: 'Elegant sarees and lehengas crafted for celebrations and special occasions.',
-    image: '/collections/party-wear.jpg',
+    image: '/collections/partywear.jpg',
     href: '/collections/sarees',
     tag: 'Celebration',
   },
@@ -85,7 +87,7 @@ export const BRANDS = [
     description:
       'Discover handcrafted luxury sarees woven with tradition, heritage, and timeless elegance.',
     href: '/collections/sarees',
-    image: '/collections/girilal-showcase.jpg',
+    image: '/collections/girilal-showcase.png',
     gradient: 'from-[#8E2D29] via-[#6E201D] to-[#4A1412]',
     accent: '#8E2D29',
     ctaLabel: 'Explore Sarees',
@@ -98,7 +100,7 @@ export const BRANDS = [
     description:
       'Contemporary designer lehengas crafted for the modern woman, redefining bridal and occasion wear.',
     href: '/collections/lehengas',
-    image: '/collections/arunima-showcase.jpg',
+    image: '/collections/arunima.png',
     gradient: 'from-[#344646] via-[#232E2E] to-[#1A2222]',
     accent: '#344646',
     ctaLabel: 'Explore Lehengas',
@@ -110,37 +112,37 @@ export const FABRICS = [
     id: 'silk',
     label: 'Pure Silk',
     description: 'The finest mulberry and tussar silk sourced from India\'s premier silk belts.',
-    icon: 'silk',
+    image : 'collections/Pure-silk.jpg',
   },
   {
     id: 'cotton',
     label: 'Premium Cotton',
     description: 'Handwoven cotton fabrics with exceptional breathability and comfort.',
-    icon: 'cotton',
+    image : 'collections/pure-cotton.jpg',
   },
   {
     id: 'banarasi',
     label: 'Banarasi',
     description: 'Masterfully designed with real zari, a craft passed down through generations.',
-    icon: 'banarasi',
+    image : 'collections/banarasi-fabric.jpg',
   },
   {
     id: 'handloom',
     label: 'Bandhej',
     description: 'Each piece is a unique creation of master weavers from across India.',
-    icon: 'handloom',
+    image: 'collections/bandhej.jpg',
   },
   {
     id: 'embroidery',
     label: 'Intricate Embroidery',
     description: 'Zardozi, gota patti, and resham work by skilled artisans.',
-    icon: 'embroidery',
+    image : 'collections/Intricate-Embroidery.jpg',
   },
   {
     id: 'weaving',
     label: 'Patola',
     description: 'Traditional techniques preserved and celebrated in every weave.',
-    icon: 'weaving',
+    image : 'collections/patola.jpg',
   },
 ]
 
@@ -151,7 +153,7 @@ export const FEATURED_PRODUCTS = [
     collection: 'Wedding Collection',
     fabric: 'Pure Kanchipuram Silk',
     price: 'Enquire',
-    image: '/products/sarees/product-1.jpg',
+    image: '/products/royalBanarsi.jpg',
     tag: 'New',
     href: '/product/kanchipuram-silk-saree',
   },
@@ -161,7 +163,7 @@ export const FEATURED_PRODUCTS = [
     collection: 'Designer Lehengas',
     fabric: 'Banarasi Silk with Zari',
     price: 'Enquire',
-    image: '/products/lehengas/product-1.jpg',
+    image: '/products/banarasiLehenga.jpg',
     tag: 'Featured',
     href: '/product/banarasi-zari-lehenga',
   },
@@ -171,7 +173,7 @@ export const FEATURED_PRODUCTS = [
     collection: 'Designer Collection',
     fabric: 'Pure Tussar Silk',
     price: 'Enquire',
-    image: '/products/sarees/product-2.jpg',
+    image: '/products/crimsonBridalSilk.jpg',
     tag: 'Best Seller',
     href: '/product/tussar-silk-designer-saree',
   },
@@ -181,7 +183,7 @@ export const FEATURED_PRODUCTS = [
     collection: 'Bridal Collection',
     fabric: 'Silk & Velvet',
     price: 'Enquire',
-    image: '/products/lehengas/product-2.jpg',
+    image: '/products/bridalLehenga.jpg',
     tag: 'Premium',
     href: '/product/bridal-lehenga-set',
   },
@@ -191,7 +193,7 @@ export const FEATURED_PRODUCTS = [
     collection: 'Heritage Collection',
     fabric: 'Pure Paithani Silk',
     price: 'Enquire',
-    image: '/products/sarees/product-3.jpg',
+    image: '/products/banarasi.jpg',
     tag: 'Heritage',
     href: '/product/paithani-silk-saree',
   },
@@ -303,12 +305,12 @@ export const TESTIMONIALS = [
 ]
 
 export const INSTAGRAM_POSTS = [
-  { id: 'ig1', image: '/gallery/instagram-1.jpg', likes: 2847 },
-  { id: 'ig2', image: '/gallery/instagram-2.jpg', likes: 1932 },
-  { id: 'ig3', image: '/gallery/instagram-3.jpg', likes: 3521 },
-  { id: 'ig4', image: '/gallery/instagram-4.jpg', likes: 2156 },
-  { id: 'ig5', image: '/gallery/instagram-5.jpg', likes: 4123 },
-  { id: 'ig6', image: '/gallery/instagram-6.jpg', likes: 1678 },
+  { id: 'ig1', image: 'collections/receptionLehenga.jpg', likes: 2847 },
+  { id: 'ig2', image: 'collections/bridalLehenga.jpg', likes: 1932 },
+  { id: 'ig3', image: '/collections/handloomSaree.jpg', likes: 3521 },
+  { id: 'ig4', image: '/collections/designerSaree.jpg', likes: 2156 },
+  { id: 'ig5', image: '/collections/cottonSaree.jpg', likes: 4123 },
+  { id: 'ig6', image: '/collections/cocktailLehengas.jpg', likes: 1678 },
 ]
 
 export const CTA = {

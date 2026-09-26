@@ -9,18 +9,22 @@ import { ProductGrid } from '@/components/shop/ProductGrid'
 import { CATEGORIES } from '@/data/categories'
 import { FILTER_GROUPS } from '@/data/filters'
 import { getFeaturedProducts } from '@/data/products'
+import { LANDING_SAREES_FEATURED_IMAGES, withFeaturedImages } from '@/data/products/images'
 
 const OCCASIONS = [
   { label: 'Wedding', slug: 'wedding', image: '/collections/wedding-sarees.jpg', gradient: 'from-[#8E2D29] to-[#6E201D]' },
-  { label: 'Festive', slug: 'festive', image: '/collections/banarasi.jpg', gradient: 'from-[#C9A96E] to-[#A6884E]' },
-  { label: 'Party', slug: 'party', image: '/collections/party-wear.jpg', gradient: 'from-[#344646] to-[#232E2E]' },
-  { label: 'Casual', slug: 'casual', image: '/collections/designer-sarees.jpg', gradient: 'from-[#E3A2A0] to-[#D48582]' },
-  { label: 'Office', slug: 'office', image: '/collections/designer-sarees.jpg', gradient: 'from-[#4A5F5F] to-[#344646]' },
-  { label: 'Cocktail', slug: 'cocktail', image: '/collections/arunima-showcase.jpg', gradient: 'from-[#111717] to-[#1E2828]' },
+  { label: 'Festive', slug: 'festive', image: '/collections/festiveSaree.jpg', gradient: 'from-[#C9A96E] to-[#A6884E]' },
+  { label: 'Party', slug: 'party', image: '/collections/party-wear-saree.jpg', gradient: 'from-[#344646] to-[#232E2E]' },
+  { label: 'Casual', slug: 'casual', image: '/collections/printedSaree.jpg', gradient: 'from-[#E3A2A0] to-[#D48582]' },
+  { label: 'Office', slug: 'office', image: '/collections/cottonSaree.jpg', gradient: 'from-[#4A5F5F] to-[#344646]' },
+  { label: 'Cocktail', slug: 'cocktail', image: '/collections/cocktailLehengas.jpg', gradient: 'from-[#111717] to-[#1E2828]' },
 ]
 
 export function CollectionLandingSections() {
-  const featuredProducts = getFeaturedProducts().slice(0, 4)
+  const featuredProducts = withFeaturedImages(
+    getFeaturedProducts().slice(0, 4),
+    LANDING_SAREES_FEATURED_IMAGES
+  )
   const allCategories = CATEGORIES
 
   return (
@@ -56,8 +60,14 @@ export function CollectionLandingSections() {
               >
                 <Link
                   to={`/search?occasion=${occasion.slug}`}
-                  className={`group relative flex min-h-[200px] items-end overflow-hidden rounded-lg bg-gradient-to-br ${occasion.gradient} p-5`}
+                  className={`group relative flex min-h-[200px] items-end overflow-hidden rounded-lg p-5 bg-cover bg-center`}
                 >
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                    style={{
+                      backgroundImage: `url(${occasion.image})`,
+                    }}
+                  />
                   <div className="absolute inset-0 bg-black/10 transition-opacity duration-500 group-hover:opacity-0" />
                   <div className="relative z-10">
                     <h3 className="font-heading text-xl text-white">{occasion.label}</h3>
