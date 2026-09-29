@@ -7,6 +7,19 @@ const offsets = new Map<string, number>()
 const URL_CHANGED = 'glpc:url-changed'
 
 /**
+ * Next.js's own `HistoryUpdater` calls `history.replaceState` from inside
+ * `useInsertionEffect`, i.e. while React is committing. Notifying listeners
+ * synchronously from there makes them schedule a state update during the
+ * insertion phase, which React rejects with "useInsertionEffect must not
+ * schedule updates". Deferring to a microtask lets the commit unwind first
+ * while still landing in the same task, so scroll restoration stays
+ * pre-paint.
+ */
+function notifyUrlChanged() {
+  queueMicrotask(() => window.dispatchEvent(new Event(URL_CHANGED)))
+}
+
+/**
  * The App Router has no `useNavigationType()`. Next.js pushes history entries
  * through `history.pushState` / `history.replaceState`, while back/forward always
  * arrives as a `popstate` event, so those signals are enough to tell POP from
@@ -23,18 +36,18 @@ function patchHistory() {
   window.history.pushState = function (...args) {
     popNavigation = false
     const result = pushState.apply(this, args)
-    window.dispatchEvent(new Event(URL_CHANGED))
+    notifyUrlChanged()
     return result
   }
   window.history.replaceState = function (...args) {
     popNavigation = false
     const result = replaceState.apply(this, args)
-    window.dispatchEvent(new Event(URL_CHANGED))
+    notifyUrlChanged()
     return result
   }
   window.addEventListener('popstate', () => {
     popNavigation = true
-    window.dispatchEvent(new Event(URL_CHANGED))
+    notifyUrlChanged()
   })
 }
 
