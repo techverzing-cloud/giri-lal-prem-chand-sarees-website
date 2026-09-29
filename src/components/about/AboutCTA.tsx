@@ -5,6 +5,7 @@ import { LuxuryButton } from '@/components/ui/LuxuryButton'
 import { getWhatsAppUrl } from '@/utils/helpers'
 //Nothing to commit
 //Nothing to commit again
+//nothing to commit again
 export function AboutCTA() {
   return (
     <section className="relative overflow-hidden bg-night py-section">
