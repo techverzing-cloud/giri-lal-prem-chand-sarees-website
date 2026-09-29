@@ -10,6 +10,7 @@ import { useEnquiry } from '@/hooks/useEnquiry'
 import { buildEnquiryPayload } from '@/services/enquiry'
 import { AnalyticsEvents } from '@/services/analytics'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
+import { ConsentCheckbox } from '@/components/privacy/ConsentCheckbox'
 import { siteConfig } from '@/config/site'
 import { getWhatsAppUrl } from '@/utils/helpers'
 import { cn } from '@/utils/cn'
@@ -22,6 +23,9 @@ const schema = z.object({
   eventType: z.string().min(1, 'Select an event type'),
   weddingDate: z.string().optional(),
   message: z.string().min(10, 'Message must be at least 10 characters'),
+  agreedToPrivacy: z.literal(true, {
+    errorMap: () => ({ message: 'Please agree to the Privacy Policy to continue' }),
+  }),
 })
 
 interface EnquiryModalProps {
@@ -51,6 +55,7 @@ export function EnquiryModal({ isOpen, onClose, product }: EnquiryModalProps) {
       eventType: '',
       weddingDate: '',
       message: '',
+      agreedToPrivacy: false,
     },
   })
 
@@ -72,7 +77,7 @@ export function EnquiryModal({ isOpen, onClose, product }: EnquiryModalProps) {
       preferredStore: '',
       message: data.message,
       referralSource: '',
-      agreedToPrivacy: true,
+      agreedToPrivacy: data.agreedToPrivacy,
     }, {
       id: product.id,
       name: product.name,
@@ -197,6 +202,12 @@ export function EnquiryModal({ isOpen, onClose, product }: EnquiryModalProps) {
                 </Field>
 
                 <div className="flex flex-col gap-3 pt-2">
+                  <ConsentCheckbox
+                    id={`enquiry-consent-${product.id}`}
+                    register={register('agreedToPrivacy')}
+                    error={errors.agreedToPrivacy?.message}
+                  />
+
                   <LuxuryButton
                     type="submit"
                     variant="primary"

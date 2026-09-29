@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
@@ -43,7 +43,7 @@ export function FeaturedProducts() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="min-w-[280px] flex-shrink-0 md:min-w-[320px] lg:min-w-[380px]"
               >
-                <Link to={product.href} className="group block">
+                <Link href={product.href} className="group block">
                   <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-night">
                     <div className="absolute inset-0 bg-gradient-to-t from-night/60 to-transparent transition-opacity duration-500 group-hover:opacity-80" />
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -95,7 +95,7 @@ export function FeaturedProducts() {
       </FadeIn>
 
       <Container className="mt-10 text-center">
-        <Link to="/collections">
+        <Link href="/collections">
           <LuxuryButton variant="outline" size="md">
             View All Products
           </LuxuryButton>

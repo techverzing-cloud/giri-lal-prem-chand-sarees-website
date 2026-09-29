@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Heart, Eye } from 'lucide-react'
 import type { Product } from '@/types'
@@ -27,7 +27,7 @@ export function ProductCard({ product, index = 0, onQuickView }: ProductCardProp
       className="group"
     >
       <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-night">
-        <Link to={`/product/${product.slug}`} className="block h-full">
+        <Link href={`/product/${product.slug}`} className="block h-full">
           <div
             className={cn(
               'h-full w-full transition-transform duration-700',
@@ -94,7 +94,7 @@ export function ProductCard({ product, index = 0, onQuickView }: ProductCardProp
             {product.occasion}
           </span>
         </div>
-        <Link to={`/product/${product.slug}`} className="block">
+        <Link href={`/product/${product.slug}`} className="block">
           <h3 className="font-heading text-lg text-night transition-colors group-hover:text-primary">
             {product.name}
           </h3>

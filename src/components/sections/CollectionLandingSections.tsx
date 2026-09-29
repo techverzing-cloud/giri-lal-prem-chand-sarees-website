@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
@@ -59,7 +59,7 @@ export function CollectionLandingSections() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
               >
                 <Link
-                  to={`/search?occasion=${occasion.slug}`}
+                  href={`/search?occasion=${occasion.slug}`}
                   className={`group relative flex min-h-[200px] items-end overflow-hidden rounded-lg p-5 bg-cover bg-center`}
                 >
                   <div
@@ -99,7 +99,7 @@ export function CollectionLandingSections() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
               >
                 <Link
-                  to={`/search?fabric=${fabric.value}`}
+                  href={`/search?fabric=${fabric.value}`}
                   className="group block rounded-lg border border-night/5 bg-white p-6 text-center transition-all duration-500 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
                 >
                   <h3 className="font-heading text-lg text-night group-hover:text-primary transition-colors">{fabric.label}</h3>
@@ -123,7 +123,7 @@ export function CollectionLandingSections() {
               <ProductGrid products={featuredProducts} columns={4} />
             </div>
             <div className="mt-10 text-center">
-              <Link to="/collections">
+              <Link href="/collections">
                 <LuxuryButton variant="outline" size="md">
                   View All Products
                 </LuxuryButton>

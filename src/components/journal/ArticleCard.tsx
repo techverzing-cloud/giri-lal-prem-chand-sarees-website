@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { JournalArticle } from '@/types/journal'
 import { ReadingTime } from './ReadingTime'
@@ -16,7 +16,7 @@ export function ArticleCard({ article, index = 0 }: { article: JournalArticle; i
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
     >
-      <Link to={`/journal/${article.slug}`} className="group block">
+      <Link href={`/journal/${article.slug}`} className="group block">
         <div className="aspect-[16/10] overflow-hidden rounded-lg bg-gradient-to-br from-primary/10 via-accent/5 to-night/10">
           <div className="flex h-full items-center justify-center transition-transform duration-700 group-hover:scale-105">
             <p className="font-heading text-white/20">Read</p>

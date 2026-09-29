@@ -18,7 +18,7 @@ export function trackEvent(name: string, properties?: Record<string, unknown>) {
     timestamp: new Date().toISOString(),
   }
 
-  if (import.meta.env.DEV) {
+  if (process.env.NODE_ENV !== 'production') {
     console.debug('[Analytics]', event)
   }
 

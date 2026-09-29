@@ -1,12 +1,15 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useAdmin } from '@/state/AdminContext'
 import { Bell, User, LogOut } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 
 export function Topbar() {
   const { currentUser, notifications, unreadNotifications, markAllNotificationsRead } = useAdmin()
+  const router = useRouter()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [signingOut, setSigningOut] = useState(false)
   const notifRef = useRef<HTMLDivElement>(null)
   const userRef = useRef<HTMLDivElement>(null)
 
@@ -18,6 +21,20 @@ export function Topbar() {
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
+
+  async function handleSignOut() {
+    setSigningOut(true)
+    setShowUserMenu(false)
+    try {
+      // Clears the httpOnly session cookie. The redirect below is not what
+      // secures the panel — the middleware guard is — but it stops the shell
+      // from rendering while the cookie is being dropped.
+      await fetch('/api/admin/auth', { method: 'DELETE' })
+    } finally {
+      router.replace('/admin/login')
+      router.refresh()
+    }
+  }
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-night/10 bg-white px-6 lg:px-8">
@@ -90,11 +107,15 @@ export function Topbar() {
                 <p className="font-body text-xs text-text-muted capitalize">{currentUser.role.replace('_', ' ')}</p>
               </div>
               <div className="p-2">
-                <Link to="/admin/profile" className="flex items-center gap-2 rounded-md px-3 py-2 font-body text-sm text-night/60 transition-colors hover:bg-night/5 hover:text-night">
+                <Link href="/admin/profile" className="flex items-center gap-2 rounded-md px-3 py-2 font-body text-sm text-night/60 transition-colors hover:bg-night/5 hover:text-night">
                   <User className="h-4 w-4" /> Profile
                 </Link>
-                <button className="flex w-full items-center gap-2 rounded-md px-3 py-2 font-body text-sm text-night/60 transition-colors hover:bg-night/5 hover:text-night">
-                  <LogOut className="h-4 w-4" /> Sign Out
+                <button
+                  onClick={handleSignOut}
+                  disabled={signingOut}
+                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 font-body text-sm text-night/60 transition-colors hover:bg-night/5 hover:text-night disabled:opacity-50"
+                >
+                  <LogOut className="h-4 w-4" /> {signingOut ? 'Signing out...' : 'Sign Out'}
                 </button>
               </div>
             </div>

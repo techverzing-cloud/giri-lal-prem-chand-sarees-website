@@ -40,9 +40,18 @@ export const BENEFITS = [
 
 export const FAQ_ITEMS = [
   {
-    question: 'How long before someone contacts me?',
-    answer: 'Our team typically responds within 24 hours during business days. For urgent enquiries, please reach out to us on WhatsApp for a faster response.',
+    question: 'What types of sarees do you offer?',
+    answer: 'We showcase a wide range of sarees, including traditional, festive, bridal, party-wear, designer, and contemporary styles. Availability may vary by collection.',
   },
+  {
+    question: 'What types of lehengas do you offer?',
+    answer: 'Our lehenga collection includes bridal, cocktail, festive, and designer lehengas. Each piece is crafted with attention to detail and quality.',
+  },
+  {
+    question: 'How can I enquire about a particular saree or lehenga?',
+    answer: 'You can enquire about any product directly through our website by clicking the "Enquire" button on the product page. Alternatively, you can reach out to us via WhatsApp or email with the product details.',
+  },
+
   {
     question: 'Can I request custom designs?',
     answer: 'Absolutely. We specialize in custom designs tailored to your preferences. Our design team will work with you to create a piece that reflects your personal style.',
@@ -56,8 +65,8 @@ export const FAQ_ITEMS = [
     answer: 'Certainly. We invite you to visit our flagship store for a personal shopping experience. Please book a consultation in advance so we can prepare our collection for you.',
   },
   {
-    question: 'Can I book online?',
-    answer: 'Yes, you can book a consultation directly through our website. Choose your preferred consultation type and our team will confirm your appointment.',
+    question: 'Do you provide blouse customization or stitching?',
+    answer: 'Stitching and customization options may be available depending on the saree or lehenga. Please contact us for details regarding your specific requirement.',
   },
   {
     question: 'What is your return policy?',

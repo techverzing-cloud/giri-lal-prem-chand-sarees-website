@@ -7,6 +7,7 @@ import { useEnquiry } from '@/hooks/useEnquiry'
 import { buildEnquiryPayload } from '@/services/enquiry'
 import { AnalyticsEvents } from '@/services/analytics'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
+import { ConsentCheckbox } from '@/components/privacy/ConsentCheckbox'
 
 const schema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -14,6 +15,9 @@ const schema = z.object({
   phone: z.string().min(10, 'Enter a valid phone number').max(15),
   subject: z.string().min(3, 'Subject is required'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
+  agreedToPrivacy: z.literal(true, {
+    errorMap: () => ({ message: 'Please agree to the Privacy Policy to continue' }),
+  }),
 })
 
 type FormData = z.infer<typeof schema>
@@ -43,7 +47,7 @@ export function ContactForm() {
       preferredStore: '',
       message: data.message,
       referralSource: '',
-      agreedToPrivacy: true,
+      agreedToPrivacy: data.agreedToPrivacy,
     })
 
     const result = await enquiry.submit(payload)
@@ -106,6 +110,12 @@ export function ContactForm() {
               className={`${inputClass} resize-none`}
             />
           </Field>
+
+          <ConsentCheckbox
+            id="contact-consent"
+            register={register('agreedToPrivacy')}
+            error={errors.agreedToPrivacy?.message}
+          />
 
           <LuxuryButton
             type="submit"

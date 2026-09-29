@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { CheckCircle, MessageCircle, ArrowLeft, Home } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
@@ -66,12 +66,12 @@ export function ThankYouCard() {
               <MessageCircle className="size-4" />
               WhatsApp Us
             </a>
-            <Link to="/collections">
+            <Link href="/collections">
               <LuxuryButton variant="outline" size="md" icon={<ArrowLeft className="size-4" />} iconPosition="left">
                 Continue Browsing
               </LuxuryButton>
             </Link>
-            <Link to="/">
+            <Link href="/">
               <LuxuryButton variant="ghost" size="md" icon={<Home className="size-4" />} iconPosition="left">
                 Home
               </LuxuryButton>

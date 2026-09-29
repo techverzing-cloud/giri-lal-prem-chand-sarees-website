@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import type { JournalArticle } from '@/types/journal'
 
 export function TrendingArticles({ articles }: { articles: JournalArticle[] }) {
@@ -9,7 +9,7 @@ export function TrendingArticles({ articles }: { articles: JournalArticle[] }) {
       {articles.slice(0, 6).map((article, index) => (
         <Link
           key={article.id}
-          to={`/journal/${article.slug}`}
+          href={`/journal/${article.slug}`}
           className="group flex items-start gap-4"
         >
           <span className="font-heading text-2xl font-medium text-primary/30 w-8 flex-shrink-0">

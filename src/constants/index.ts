@@ -1,4 +1,5 @@
 import type { NavItem } from '@/types'
+import { COOKIE_POLICY_ROUTE, PRIVACY_POLICY_ROUTE, TERMS_ROUTE } from '@/config/privacy'
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: '/' },
@@ -7,8 +8,8 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/collections',
     children: [
       { label: 'All Collections', href: '/collections' },
-      { label: 'Giri Lal Prem Chand Sarees — Sarees', href: '/collections/sarees', brand: 'girilal' },
-      { label: 'Arunima Fashions — Lehengas', href: '/collections/lehengas', brand: 'arunima' },
+      { label: 'Giri Lal Prem Chand Sarees â€” Sarees', href: '/collections/sarees', brand: 'girilal' },
+      { label: 'Arunima Fashions â€” Lehengas', href: '/collections/lehengas', brand: 'arunima' },
     ],
   },
   {
@@ -30,10 +31,11 @@ export const FOOTER_LINKS = {
     { label: 'Luxury Sarees', href: '/collections/sarees' },
     { label: 'Designer Lehengas', href: '/collections/lehengas' },
   ],
-  legal: [
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms of Service', href: '/terms' },
-  ],
+    legal: [
+      { label: 'Privacy Policy', href: PRIVACY_POLICY_ROUTE },
+      { label: 'Cookie Policy', href: COOKIE_POLICY_ROUTE },
+      { label: 'Terms of Service', href: TERMS_ROUTE },
+    ],
 }
 
 export const ANIMATION_DURATIONS = {

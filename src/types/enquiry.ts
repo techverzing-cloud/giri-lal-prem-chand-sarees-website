@@ -49,6 +49,7 @@ export interface EnquiryPayload {
     budget?: string
     interestedCollection?: string
     referralSource?: string
+    message?: string
   }
   source: {
     page: string

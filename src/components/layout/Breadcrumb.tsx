@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { ChevronRight, Home } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
@@ -7,8 +8,8 @@ interface BreadcrumbProps {
 }
 
 export function Breadcrumb({ variant = 'light' }: BreadcrumbProps) {
-  const location = useLocation()
-  const pathSegments = location.pathname.split('/').filter(Boolean)
+  const pathname = usePathname()
+  const pathSegments = pathname.split('/').filter(Boolean)
 
   if (pathSegments.length === 0) return null
 
@@ -27,7 +28,7 @@ export function Breadcrumb({ variant = 'light' }: BreadcrumbProps) {
       <ol className="flex items-center gap-2">
         <li>
           <Link
-            to="/"
+            href="/"
             className={cn(
               'flex items-center gap-1 transition-colors',
               variant === 'dark' ? 'text-white/50 hover:text-white' : 'text-text-muted hover:text-night'
@@ -57,7 +58,7 @@ export function Breadcrumb({ variant = 'light' }: BreadcrumbProps) {
               </span>
             ) : (
               <Link
-                to={crumb.href}
+                href={crumb.href}
                 className={cn(
                   'transition-colors',
                   variant === 'dark' ? 'text-white/50 hover:text-white' : 'text-text-muted hover:text-night'

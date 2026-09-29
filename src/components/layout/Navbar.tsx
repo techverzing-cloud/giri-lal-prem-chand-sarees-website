@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { cn } from '@/utils/cn'
@@ -12,9 +13,9 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeMega, setActiveMega] = useState<string | null>(null)
-  const location = useLocation()
+  const pathname = usePathname()
 
-  const isHome = location.pathname === '/'
+  const isHome = pathname === '/'
   const isTransparent = isHome && !scrolled
 
   useLockBodyScroll(mobileOpen)
@@ -32,7 +33,7 @@ export function Navbar() {
   useEffect(() => {
     setMobileOpen(false)
     setActiveMega(null)
-  }, [location])
+  }, [pathname])
 
   function handleMegaKeyDown(e: React.KeyboardEvent, label: string) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -56,7 +57,7 @@ export function Navbar() {
       <Container>
         <nav className="flex h-20 items-center justify-between md:h-24" role="navigation" aria-label="Main navigation">
           <Link
-            to="/"
+            href="/"
             className="relative z-10"
             aria-label={`${siteConfig.company.name} - Home`}
           >
@@ -76,7 +77,7 @@ export function Navbar() {
                 onMouseLeave={() => setActiveMega(null)}
               >
                 <Link
-                  to={item.href}
+                  href={item.href}
                   className={cn(
                     'group relative px-4 py-2 font-body text-sm font-medium uppercase tracking-[0.15em] transition-colors duration-300',
                     isTransparent ? 'text-white/80 hover:text-white' : 'text-night/70 hover:text-night'
@@ -92,7 +93,7 @@ export function Navbar() {
                   <span
                     className={cn(
                       'absolute -bottom-1 left-4 h-px w-0 bg-primary transition-all duration-500',
-                      location.pathname === item.href && 'w-8'
+                      pathname === item.href && 'w-8'
                     )}
                   />
                 </Link>
@@ -113,7 +114,7 @@ export function Navbar() {
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
-                          to={child.href}
+                          href={child.href}
                           className="group flex items-center gap-3 rounded-md px-4 py-3 transition-colors duration-300 hover:bg-secondary"
                           role="menuitem"
                         >
@@ -138,7 +139,7 @@ export function Navbar() {
 
           <div className="hidden items-center gap-4 lg:flex">
             <Link
-              to="/contact"
+              href="/contact"
               className={cn(
                 'font-body text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-300',
                 isTransparent ? 'text-white/80 hover:text-white' : 'text-night/70 hover:text-night'
@@ -147,7 +148,7 @@ export function Navbar() {
               Enquire
             </Link>
             <Link
-              to="/contact"
+              href="/contact"
               className={cn(
                 'font-body text-xs font-semibold uppercase tracking-[0.2em] border px-6 py-2.5 transition-all duration-300',
                 isTransparent
@@ -204,7 +205,7 @@ export function Navbar() {
                         {item.children.map((child) => (
                           <Link
                             key={child.href}
-                            to={child.href}
+                            href={child.href}
                             className="py-2 font-heading text-2xl text-white/80 transition-colors hover:text-white"
                           >
                             {child.label}
@@ -214,7 +215,7 @@ export function Navbar() {
                     </div>
                   ) : (
                     <Link
-                      to={item.href}
+                      href={item.href}
                       className="block py-3 font-heading text-3xl text-white/80 transition-colors hover:text-white"
                     >
                       {item.label}
@@ -226,7 +227,7 @@ export function Navbar() {
 
             <div className="mt-auto border-t border-white/10 pt-8">
               <Link
-                to="/contact"
+                href="/contact"
                 className="inline-block w-full border border-white/30 px-8 py-4 text-center font-body text-sm uppercase tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-night"
               >
                 Make an Enquiry

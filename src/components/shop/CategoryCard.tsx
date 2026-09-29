@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import type { Category } from '@/types'
@@ -21,7 +21,7 @@ export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="group relative overflow-hidden rounded-lg bg-night"
     >
-      <Link to={href} className="block">
+      <Link href={href} className="block">
         <div className="relative aspect-[4/5] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/30 to-transparent transition-all duration-500" />
           <div

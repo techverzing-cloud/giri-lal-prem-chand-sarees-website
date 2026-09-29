@@ -113,7 +113,7 @@ export const navigationConfig: NavigationConfig = {
       {
         title: 'Legal',
         links: [
-          { id: 'foot-leg-privacy', label: 'Privacy Policy', url: '/privacy', visible: true },
+          { id: 'foot-leg-privacy', label: 'Privacy Policy', url: '/privacy-policy', visible: true },
           { id: 'foot-leg-terms', label: 'Terms of Service', url: '/terms', visible: true },
         ],
       },

@@ -1,5 +1,5 @@
 import type { EnquiryPayload, EmailResponse, EnquiryFormValues } from '@/types/enquiry'
-import { sendEnquiryEmail, isEmailJSConfigured } from '@/services/email'
+import { sendEnquiryEmail } from '@/services/email'
 import { trackEvent } from '@/services/analytics'
 import { getLeadSource, getBrowserInfo, getScreenResolution } from '@/services/tracking'
 
@@ -28,6 +28,7 @@ export function buildEnquiryPayload(
       budget: data.budget || undefined,
       interestedCollection: data.interestedCollection || undefined,
       referralSource: data.referralSource || undefined,
+      message: data.message || undefined,
     },
     source: {
       page: window.location.pathname,
@@ -40,7 +41,11 @@ export function buildEnquiryPayload(
       timestamp: new Date().toISOString(),
     },
     metadata: {
-      agreedToPrivacy: data.agreedToPrivacy ?? true,
+      // Pass the user's actual answer through. Previously this was
+      // `data.agreedToPrivacy ?? true`, which silently recorded consent on
+      // behalf of a visitor who was never asked. The server now rejects the
+      // request outright if this is not literally `true`.
+      agreedToPrivacy: data.agreedToPrivacy,
       campaign: source.utm.utm_campaign || undefined,
     },
   }
@@ -56,17 +61,12 @@ export async function submitEnquiry(
 ): Promise<EmailResponse> {
   const payload = buildEnquiryPayload(type, data, options?.product, options?.consultation)
 
-  trackEvent('form_submit', { type, success: true })
+  // The enquiry always goes to the server. There is deliberately no "email
+  // service not configured, so report success anyway" branch: that silently
+  // discarded leads while telling the customer they had been received.
+  const result = await sendEnquiryEmail(payload)
 
-  if (!isEmailJSConfigured()) {
-    console.warn('EmailJS not configured. Payload:', payload)
-    return {
-      success: true,
-      message: 'Thank you for your enquiry. Our team will contact you shortly.',
-    }
-  }
+  trackEvent('form_submit', { type, success: result.success })
 
-  return sendEnquiryEmail(payload)
+  return result
 }
-
-export { isEmailJSConfigured }

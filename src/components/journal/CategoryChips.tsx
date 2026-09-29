@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { JOURNAL_CATEGORIES } from '@/data/journal/categories'
 
@@ -14,7 +14,7 @@ export function CategoryChips() {
           transition={{ duration: 0.4, delay: index * 0.03 }}
         >
           <Link
-            to={`/journal/category/${cat.slug}`}
+            href={`/journal/category/${cat.slug}`}
             className="flex-shrink-0 rounded-full border border-night/10 px-5 py-2 font-body text-sm text-night transition-all duration-300 hover:border-primary/30 hover:bg-primary/5 hover:text-primary whitespace-nowrap"
           >
             {cat.name}

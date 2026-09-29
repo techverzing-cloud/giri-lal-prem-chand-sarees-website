@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
@@ -26,7 +26,7 @@ export function BrandSection() {
               transition={{ duration: 0.7, delay: index * 0.2 }}
               className="group relative overflow-hidden rounded-lg"
             >
-              <Link to={brand.href} className="block">
+              <Link href={brand.href} className="block">
                 <div className={`relative flex min-h-[400px] items- bg-gradient-to-br ${brand.gradient} p-8 md:min-h-[500px] md:p-12`}>
                   <div
                     className="absolute inset-0 bg-night/20 transition-opacity duration-500 group-hover:opacity-0"

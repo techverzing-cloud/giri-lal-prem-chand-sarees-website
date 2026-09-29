@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
@@ -88,7 +88,7 @@ export function HeroSection() {
           <ScrollReveal direction="up" distance={20} delay={1.1} duration={0.8}>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               {HERO.cta.map((btn) => (
-                <Link key={btn.label} to={btn.href}>
+                <Link key={btn.label} href={btn.href}>
                   <LuxuryButton variant={btn.variant} size="lg">
                     {btn.label}
                   </LuxuryButton>

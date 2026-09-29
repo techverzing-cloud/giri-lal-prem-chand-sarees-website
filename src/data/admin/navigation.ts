@@ -23,7 +23,7 @@ export const adminNavMenus: AdminNavMenu[] = [
     id: 'nav-footer',
     name: 'Footer Navigation',
     items: [
-      { id: 'nav-fi-1', label: 'Privacy Policy', url: '/privacy', displayOrder: 1, visible: true, openInNewTab: false },
+      { id: 'nav-fi-1', label: 'Privacy Policy', url: '/privacy-policy', displayOrder: 1, visible: true, openInNewTab: false },
       { id: 'nav-fi-2', label: 'Terms of Service', url: '/terms', displayOrder: 2, visible: true, openInNewTab: false },
       { id: 'nav-fi-3', label: 'FAQ', url: '/contact#faq', displayOrder: 3, visible: true, openInNewTab: false },
     ],

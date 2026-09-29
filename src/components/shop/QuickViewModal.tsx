@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Heart, Check } from 'lucide-react'
 import type { Product } from '@/types'
@@ -125,12 +125,12 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
                 </div>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Link to={`/product/${product.slug}`} className="flex-1">
+                  <Link href={`/product/${product.slug}`} className="flex-1">
                     <LuxuryButton variant="primary" size="lg" fullWidth>
                       View Full Details
                     </LuxuryButton>
                   </Link>
-                  <Link to={`/enquiry?product=${product.slug}`} className="flex-1">
+                  <Link href={`/enquiry?product=${product.slug}`} className="flex-1">
                     <LuxuryButton variant="outline" size="lg" fullWidth>
                       Enquire Now
                     </LuxuryButton>

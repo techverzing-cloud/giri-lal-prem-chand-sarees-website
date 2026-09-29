@@ -1,5 +1,5 @@
 import { Component, type ReactNode, type ErrorInfo } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { AlertTriangle } from 'lucide-react'
 
 interface ErrorBoundaryProps {
@@ -44,7 +44,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <button onClick={() => window.location.reload()} className="rounded-lg bg-primary px-6 py-2.5 font-body text-sm font-medium text-white transition-colors hover:bg-primary-light">
               Refresh Page
             </button>
-            <Link to="/" className="rounded-lg border border-night/10 px-6 py-2.5 font-body text-sm font-medium text-night transition-colors hover:bg-night/5">
+            <Link href="/" className="rounded-lg border border-night/10 px-6 py-2.5 font-body text-sm font-medium text-night transition-colors hover:bg-night/5">
               Go Home
             </Link>
           </div>

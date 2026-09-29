@@ -26,8 +26,11 @@
   --color-surface-secondary: #FFF8F3;
   --color-surface-dark: #111717;
 
-  --font-heading: "Cormorant Garamond", serif;
-  --font-body: "Manrope", sans-serif;
+  /* Font families are self-hosted by next/font in src/app/layout.tsx and
+     exposed as --glpc-font-* variables. The Tailwind `font-heading` and
+     `font-body` utilities are unchanged. */
+  --font-heading: var(--glpc-font-heading), Georgia, "Times New Roman", serif;
+  --font-body: var(--glpc-font-body), system-ui, -apple-system, sans-serif;
 
   --spacing-section: 6rem;
   --spacing-section-sm: 3rem;

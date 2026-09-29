@@ -33,7 +33,7 @@ export function useEnquiry() {
       productName: payload.product?.name ?? '',
       preferredTime: payload.consultation?.preferredTime ?? '',
       preferredStore: payload.consultation?.preferredStore ?? '',
-      message: payload.event?.referralSource ?? '',
+      message: payload.event?.message ?? '',
       referralSource: payload.event?.referralSource ?? '',
       agreedToPrivacy: payload.metadata.agreedToPrivacy,
     }, {

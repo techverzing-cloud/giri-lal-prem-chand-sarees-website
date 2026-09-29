@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Container } from '@/components/ui/Container'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
@@ -34,12 +34,12 @@ export function AboutCTA() {
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link to="/collections">
+            <Link href="/collections">
               <LuxuryButton variant="outlineLight" size="lg">
                 Explore Collection
               </LuxuryButton>
             </Link>
-            <Link to="/book-consultation">
+            <Link href="/book-consultation">
               <LuxuryButton variant="primary" size="lg">
                 Book Consultation
               </LuxuryButton>

@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { cn } from '@/utils/cn'
 import {
   LayoutDashboard,
@@ -35,7 +36,7 @@ interface AdminLayoutProps {
 }
 
 export function AdminLayout({ children, title, description }: AdminLayoutProps) {
-  const location = useLocation()
+  const pathname = usePathname()
 
   return (
     <div className="min-h-screen bg-night/[0.02]">
@@ -51,11 +52,11 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
           <nav className="flex-1 space-y-1 px-3 py-4">
             {adminNav.map((item) => {
-              const isActive = location.pathname === item.href
+              const isActive = pathname === item.href
               return (
                 <Link
                   key={item.href}
-                  to={item.href}
+                  href={item.href}
                   className={cn(
                     'flex items-center gap-3 rounded-md px-3 py-2.5 font-body text-sm transition-all',
                     isActive
@@ -72,7 +73,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
           <div className="border-t border-night/10 px-3 py-4">
             <Link
-              to="/"
+              href="/"
               className="flex items-center gap-2 rounded-md px-3 py-2 font-body text-xs text-night/50 transition-colors hover:bg-night/5 hover:text-night"
             >
               <ArrowLeft className="h-3.5 w-3.5" />

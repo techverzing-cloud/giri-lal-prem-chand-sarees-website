@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Container } from '@/components/ui/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
@@ -29,7 +29,7 @@ function CollectionCard({
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="group relative overflow-hidden rounded-lg bg-night"
     >
-      <Link to={href} className="block">
+      <Link href={href} className="block">
         <div className="relative aspect-[3/4] overflow-hidden md:aspect-[4/5]">
           <img
             src={image}

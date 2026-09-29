@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Fragment } from 'react'
+import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { siteConfig } from '@/config/site'
+import { requestConsentPanel } from '@/lib/consent'
 import { FOOTER_LINKS } from '@/constants'
 import { Instagram, Facebook, Youtube } from 'lucide-react'
 
@@ -9,12 +11,12 @@ export function Footer() {
 
   return (
     <footer className="bg-night text-white" role="contentinfo">
-      <Container className="py-16 md:py-20 ">
+      <Container className="py-16 md:py-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
           <div className="lg:col-span-1">
-            <Link to="/" className="inline-block" aria-label={`${siteConfig.company.name} - Home`}>
+            <Link href="/" className="inline-block" aria-label={`${siteConfig.company.name} - Home`}>
               <Link
-            to="/"
+            href="/"
             className="relative z-10"
             aria-label={`${siteConfig.company.name} - Home`}
           >
@@ -67,7 +69,7 @@ export function Footer() {
               {FOOTER_LINKS.quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="font-body text-sm text-white/60 transition-colors hover:text-white"
                   >
                     {link.label}
@@ -85,7 +87,7 @@ export function Footer() {
               {FOOTER_LINKS.collections.map((link) => (
                 <li key={link.href}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="font-body text-sm text-white/60 transition-colors hover:text-white"
                   >
                     {link.label}
@@ -135,20 +137,35 @@ export function Footer() {
             <p className="font-body text-xs text-white/40">
               &copy; 1946-{currentYear} - {siteConfig.company.name}. All rights reserved.
             </p>
-            <div className="flex items-center gap-4">
-              <Link
-                to="/privacy"
-                className="font-body text-xs text-white/40 transition-colors hover:text-white/60"
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              {/* Rendered from `FOOTER_LINKS.legal` so there is one list of legal
+                  routes. The version used to be hardcoded here, which meant the
+                  footer and `src/constants` could drift apart. */}
+              {FOOTER_LINKS.legal.map((link, index) => (
+                <Fragment key={link.href}>
+                  {index > 0 && (
+                    <span aria-hidden="true" className="text-white/20">
+                      |
+                    </span>
+                  )}
+                  <Link
+                    href={link.href}
+                    className="font-body text-xs text-white/40 transition-colors hover:text-white/60"
+                  >
+                    {link.label}
+                  </Link>
+                </Fragment>
+              ))}
+              <span aria-hidden="true" className="text-white/20">
+                |
+              </span>
+              <button
+                type="button"
+                onClick={requestConsentPanel}
+                className="font-body text-xs text-white/40 transition-colors hover:text-white/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
-                Privacy
-              </Link>
-              <span className="text-white/20">|</span>
-              <Link
-                to="/terms"
-                className="font-body text-xs text-white/40 transition-colors hover:text-white/60"
-              >
-                Terms and Conditions
-              </Link>
+                Manage Privacy Settings
+              </button>
             </div>
             <p className="font-body text-xs text-white/30">
               Developed by{' '}

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from '@/components/ui/NavLink'
 import { cn } from '@/utils/cn'
 import { useAdmin } from '@/state/AdminContext'
 import {
@@ -77,7 +77,7 @@ export function Sidebar() {
         {navItems.map((item) => (
           <NavLink
             key={item.href}
-            to={item.href}
+            href={item.href}
             end={item.href === '/admin'}
             className={({ isActive }) =>
               cn(
@@ -107,7 +107,7 @@ export function Sidebar() {
 
       <div className="border-t border-night/10 px-3 py-4">
         <NavLink
-          to="/"
+          href="/"
           className={cn(
             'flex items-center gap-3 rounded-lg px-3 py-2 font-body text-xs text-night/50 transition-colors hover:bg-night/5 hover:text-night',
             !sidebarOpen && 'justify-center'

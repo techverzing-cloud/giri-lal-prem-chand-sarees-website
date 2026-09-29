@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import type { JournalArticle } from '@/types/journal'
 import { ReadingTime } from './ReadingTime'
 import { JOURNAL_CATEGORIES } from '@/data/journal/categories'
@@ -12,7 +12,7 @@ export function ArticleMeta({ article }: { article: JournalArticle }) {
     <div className="flex flex-wrap items-center gap-4 font-body text-sm text-text-muted">
       {category && (
         <Link
-          to={`/journal/category/${category.slug}`}
+          href={`/journal/category/${category.slug}`}
           className="font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:text-primary/70 text-xs"
         >
           {category.name}

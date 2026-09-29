@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import type { JournalArticle } from '@/types/journal'
@@ -31,7 +31,7 @@ export function FeaturedArticle({ article }: { article: JournalArticle }) {
           <div className="flex flex-col justify-center p-8 md:p-10">
             {category && (
               <Link
-                to={`/journal/category/${category.slug}`}
+                href={`/journal/category/${category.slug}`}
                 className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-primary/70"
               >
                 {category.name}
@@ -59,7 +59,7 @@ export function FeaturedArticle({ article }: { article: JournalArticle }) {
               <span>{new Date(article.publishDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
             </div>
 
-            <Link to={`/journal/${article.slug}`} className="mt-6">
+            <Link href={`/journal/${article.slug}`} className="mt-6">
               <LuxuryButton variant="primary" size="md" icon={<ArrowRight className="size-4" />}>
                 Read Story
               </LuxuryButton>

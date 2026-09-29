@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { MessageCircle, ArrowRight } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
@@ -47,7 +47,7 @@ export function CTASection() {
                   WhatsApp Us
                 </LuxuryButton>
               </a>
-              <Link to="/contact">
+              <Link href="/contact">
                 <LuxuryButton variant="outlineLight" size="lg" icon={<ArrowRight className="size-4" />} iconPosition="right">
                   Contact Us
                 </LuxuryButton>

@@ -47,7 +47,7 @@ export function StoreExperience() {
             className="aspect-[5/4] mt-24 overflow-hidden rounded-lg bg-gradient-to-br from-primary/10 via-accent/5 to-night/10"
           >
             <img
-              src="/about/timeline-2025.jpg"
+              src="/collections/random.jpg"
               alt="Giri Lal Prem Chand — A Digital Future"
               className="h-full w-full object-cover"
               onError={(e) => {

@@ -1,10 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { Send, Loader, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react'
 import type { EnquiryFormValues } from '@/types/enquiry'
 import { ENQUIRY_EVENT_TYPES, BUDGET_RANGES, REFERRAL_SOURCES, CONTACT_METHODS } from '@/types/enquiry'
 import { CONSULTATION_STEPS } from '@/constants/enquiry'
 import { ProgressStepper } from './ProgressStepper'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
+import { ConsentCheckbox } from '@/components/privacy/ConsentCheckbox'
+import { PRIVACY_POLICY_ROUTE } from '@/config/privacy'
 import { cn } from '@/utils/cn'
 
 interface ConsultationFormProps {
@@ -254,19 +257,23 @@ export function ConsultationForm({
                 </div>
               </div>
 
-              <label className="mt-6 flex cursor-pointer items-start gap-3">
-                <input type="checkbox" {...register('agreedToPrivacy')} className="mt-0.5 size-4 accent-primary" />
-                <span className="font-body text-sm text-text-secondary">
-                  I agree to the{' '}
-                  <a href="/privacy" target="_blank" className="text-primary underline transition-colors hover:text-primary/70">
-                    Privacy Policy
-                  </a>{' '}
-                  and consent to being contacted regarding my enquiry.
-                </span>
-              </label>
-              {errors.agreedToPrivacy && (
-                <p className="mt-1 font-body text-xs text-red-500" role="alert">{errors.agreedToPrivacy.message}</p>
-              )}
+              <ConsentCheckbox
+                id="consultation-consent"
+                register={register('agreedToPrivacy')}
+                error={errors.agreedToPrivacy?.message}
+                className="mt-6"
+              >
+                I agree to the processing of my personal information so the team
+                can respond to my enquiry, and I consent to being contacted about
+                it, as described in the{' '}
+                <Link
+                  href={PRIVACY_POLICY_ROUTE}
+                  className="font-medium text-primary underline underline-offset-2 transition-colors hover:text-primary/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </ConsentCheckbox>
 
               <div className="flex items-center justify-between pt-4">
                 <button onClick={onPrev} className="flex items-center gap-2 font-body text-sm text-text-muted transition-colors hover:text-night">
