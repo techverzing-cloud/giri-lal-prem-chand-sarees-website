@@ -4,11 +4,14 @@ import { motion, useSpring } from 'framer-motion'
 export function Cursor() {
   const [isVisible, setIsVisible] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false)
 
   const cursorX = useSpring(0, { stiffness: 500, damping: 28, mass: 0.5 })
   const cursorY = useSpring(0, { stiffness: 500, damping: 28, mass: 0.5 })
 
   useEffect(() => {
+    setIsCoarsePointer(window.matchMedia('(pointer: coarse)').matches)
+
     function handleMouseMove(e: MouseEvent) {
       cursorX.set(e.clientX)
       cursorY.set(e.clientY)
@@ -43,7 +46,7 @@ export function Cursor() {
     }
   }, [])
 
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+  if (isCoarsePointer) {
     return null
   }
 
@@ -59,7 +62,7 @@ export function Cursor() {
         animate={{
           width: isHovering ? 48 : 24,
           height: isHovering ? 48 : 24,
-          backgroundColor: isHovering ? 'rgba(142, 45, 41, 0.1)' : 'transparent',
+          backgroundColor: isHovering ? 'rgba(142, 45, 41, 0.1)' : 'rgba(142, 45, 41, 0)',
           borderColor: isHovering ? '#8E2D29' : '#111717',
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
