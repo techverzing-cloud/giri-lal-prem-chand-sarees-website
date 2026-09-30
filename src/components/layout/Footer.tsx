@@ -15,17 +15,17 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block" aria-label={`${siteConfig.company.name} - Home`}>
-              <Link
+              {/* <Link
             href="/"
             className="relative z-10"
             aria-label={`${siteConfig.company.name} - Home`}
-          >
+          > */}
             <img
               src="/logos/landscape_logo_without_back.png"
               alt={`${siteConfig.company.name} - Home`}
               className="h-16 w-auto object-contain  md:h-30 md:w-auto"
             />
-          </Link>
+          {/* </Link> */}
             </Link>
             <p className="mt-4 font-body text-sm leading-relaxed text-white/60">
               {siteConfig.company.description}

@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
@@ -33,11 +34,15 @@ import { cn } from '@/utils/cn'
  */
 export function ConsentBanner() {
   const { hasDecided, allGranted, decide, withdraw } = useConsent()
+
   const [isOpen, setIsOpen] = useState(false)
   const [isCustomising, setIsCustomising] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const [draft, setDraft] = useState<ConsentCategory[]>([])
+
   const panelRef = useRef<HTMLDivElement>(null)
   const acceptRef = useRef<HTMLButtonElement>(null)
+
   /**
    * Only move focus into the panel when the visitor opened it deliberately.
    * Auto-focusing the automatic first-visit prompt would yank focus away from
@@ -45,6 +50,14 @@ export function ConsentBanner() {
    * accessibility complaint about consent banners.
    */
   const focusOnOpen = useRef(false)
+
+  /**
+   * Prevent server/client markup differences caused by consent state that may
+   * come from browser storage.
+   */
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   /** Open the panel as a direct result of a user action, and move focus to it. */
   function openFromUserAction() {
@@ -60,12 +73,15 @@ export function ConsentBanner() {
     getPanelRequestCount,
     () => 0
   )
+
   const lastHandledRequest = useRef(0)
 
   useEffect(() => {
     if (panelRequest === 0 || panelRequest === lastHandledRequest.current) return
+
     lastHandledRequest.current = panelRequest
     openFromUserAction()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [panelRequest])
 
@@ -77,26 +93,32 @@ export function ConsentBanner() {
   // If the version is bumped while the tab is open, ask again.
   useEffect(() => {
     const onVersionChange = () => setIsOpen(true)
+
     window.addEventListener('storage', onVersionChange)
+
     return () => window.removeEventListener('storage', onVersionChange)
   }, [])
 
   // Escape closes. The decision is the user's to make, not to postpone forever.
   useEffect(() => {
     if (!isOpen) return
+
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         setIsOpen(false)
         setIsCustomising(false)
       }
     }
+
     document.addEventListener('keydown', onKeyDown)
+
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [isOpen])
 
   // Move focus into the panel only when the visitor opened it deliberately.
   useEffect(() => {
     if (!isOpen || !focusOnOpen.current) return
+
     acceptRef.current?.focus()
     focusOnOpen.current = false
   }, [isOpen])
@@ -112,17 +134,11 @@ export function ConsentBanner() {
   return (
     <>
       {/* Re-entry point, rendered only after a decision exists. */}
-      {!isOpen && hasDecided && (
+      {isMounted && !isOpen && hasDecided && (
         <button
           type="button"
           onClick={openFromUserAction}
-          className={cn(
-            // Same bottom offset as the panel itself. It must NOT drop to
-            // bottom-6 on desktop, because that is exactly where BackToTop
-            // (bottom-6, left-6, size-12) sits, and the two would overlap.
-            'fixed bottom-[5.5rem] left-4 z-[60] inline-flex items-center gap-2 rounded-full border border-night/10 bg-white/90 px-3 py-2 font-body text-xs text-night shadow-sm backdrop-blur-md transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
-            'sm:left-6'
-          )}
+          className="fixed bottom-[5.5rem] left-4 z-[60] inline-flex items-center gap-2 rounded-full border border-night/10 bg-white/90 px-3 py-2 font-body text-xs text-night shadow-sm backdrop-blur-md transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:left-6"
           aria-label="Manage privacy settings"
         >
           <ShieldCheck className="size-3.5" aria-hidden="true" />
@@ -131,7 +147,7 @@ export function ConsentBanner() {
       )}
 
       <AnimatePresence>
-        {isOpen && (
+        {isMounted && isOpen && (
           <motion.div
             ref={panelRef}
             role="dialog"
@@ -141,7 +157,10 @@ export function ConsentBanner() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{
+              duration: 0.3,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
             className={cn(
               // Bottom-left, stacked above BackToTop (bottom-6, size-12) so it
               // never covers that control. Full width on small screens, with an
@@ -152,7 +171,11 @@ export function ConsentBanner() {
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-4 flex-shrink-0 text-primary" aria-hidden="true" />
+                <ShieldCheck
+                  className="size-4 flex-shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+
                 <h2
                   id="consent-banner-title"
                   className="font-heading text-base text-night"
@@ -160,6 +183,7 @@ export function ConsentBanner() {
                   Your privacy choices
                 </h2>
               </div>
+
               <button
                 type="button"
                 onClick={() => {
@@ -177,9 +201,9 @@ export function ConsentBanner() {
               id="consent-banner-description"
               className="mt-3 font-body text-sm leading-relaxed text-text-secondary"
             >
-              We use your information only to answer your enquiry and, if you ask
-              for it, to send you the journal. We do not use advertising trackers
-              or sell your data.
+              We use your information only to answer your enquiry and, if you
+              ask for it, to send you the journal. We do not use advertising
+              trackers or sell your data.
               {optionalCategories.length > 0 && (
                 <>
                   {' '}
@@ -230,8 +254,12 @@ export function ConsentBanner() {
                       }
                       className="mt-0.5 size-4 flex-shrink-0 cursor-pointer rounded-sm accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     />
+
                     <span className="font-body text-sm leading-relaxed text-text-secondary">
-                      <span className="font-medium text-night">{category.label}</span>
+                      <span className="font-medium text-night">
+                        {category.label}
+                      </span>
+
                       <span className="mt-0.5 block text-xs text-text-muted">
                         {category.purpose} Provided by {category.provider}.
                       </span>
@@ -247,6 +275,7 @@ export function ConsentBanner() {
                   >
                     Save choices
                   </button>
+
                   <button
                     type="button"
                     onClick={() => setIsCustomising(false)}
@@ -261,11 +290,14 @@ export function ConsentBanner() {
                 <button
                   ref={acceptRef}
                   type="button"
-                  onClick={() => choose(CONSENT_CATEGORIES.map((c) => c.id))}
+                  onClick={() =>
+                    choose(CONSENT_CATEGORIES.map((c) => c.id))
+                  }
                   className="flex-1 rounded-md bg-primary px-4 py-2.5 font-body text-sm font-medium text-white transition-colors hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   Accept
                 </button>
+
                 <button
                   type="button"
                   onClick={() => choose([])}
@@ -305,3 +337,4 @@ export function ConsentBanner() {
     </>
   )
 }
+

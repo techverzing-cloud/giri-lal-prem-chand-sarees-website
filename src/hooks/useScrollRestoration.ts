@@ -1,84 +1,126 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
+'use client'
 
-const offsets = new Map<string, number>()
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-/** Fired whenever Next.js writes a new history entry. */
-const URL_CHANGED = 'glpc:url-changed'
-
-/**
- * The App Router has no `useNavigationType()`. Next.js pushes history entries
- * through `history.pushState` / `history.replaceState`, while back/forward always
- * arrives as a `popstate` event, so those signals are enough to tell POP from
- * PUSH.
- */
-let popNavigation = false
-let historyPatched = false
-
-function patchHistory() {
-  if (historyPatched || typeof window === 'undefined') return
-  historyPatched = true
-
-  const { pushState, replaceState } = window.history
-  window.history.pushState = function (...args) {
-    popNavigation = false
-    const result = pushState.apply(this, args)
-    window.dispatchEvent(new Event(URL_CHANGED))
-    return result
-  }
-  window.history.replaceState = function (...args) {
-    popNavigation = false
-    const result = replaceState.apply(this, args)
-    window.dispatchEvent(new Event(URL_CHANGED))
-    return result
-  }
-  window.addEventListener('popstate', () => {
-    popNavigation = true
-    window.dispatchEvent(new Event(URL_CHANGED))
+export function useScrollRestoration() {
+  const [urlKey, setUrlKey] = useState(() => {
+    if (typeof window === 'undefined') return ''
+    return `${window.location.pathname}${window.location.search}`
   })
-}
 
-/**
- * New navigations start at the top; back/forward return to where the user was.
- * Applied in layout effects so the jump happens before paint.
- *
- * The current URL is read from `window` rather than `useSearchParams()` on
- * purpose: `useSearchParams()` suspends during prerendering, which would force a
- * Suspense boundary around the entire site shell and defeat the static render.
- */
-export function useScrollRestoration(): void {
-  const pathname = usePathname()
-  const [urlKey, setUrlKey] = useState('')
+  const scrollPositions = useRef<Record<string, number>>({})
+  const isPopState = useRef(false)
+
+  const saveScrollPosition = useCallback(() => {
+    if (typeof window === 'undefined') return
+
+    const key = `${window.location.pathname}${window.location.search}`
+
+    scrollPositions.current[key] = window.scrollY
+  }, [])
 
   const readUrl = useCallback(() => {
-    setUrlKey(`${window.location.pathname}${window.location.search}`)
+    if (typeof window === 'undefined') return
+
+    const nextUrlKey = `${window.location.pathname}${window.location.search}`
+
+    // Do not update React state synchronously from history callbacks.
+    queueMicrotask(() => {
+      setUrlKey((current) =>
+        current === nextUrlKey ? current : nextUrlKey
+      )
+    })
   }, [])
 
   useEffect(() => {
-    patchHistory()
-    readUrl()
-    window.addEventListener(URL_CHANGED, readUrl)
-    return () => window.removeEventListener(URL_CHANGED, readUrl)
+    if (typeof window === 'undefined') return
+
+    const handlePopState = () => {
+      isPopState.current = true
+      readUrl()
+    }
+
+    const originalPushState = window.history.pushState
+    const originalReplaceState = window.history.replaceState
+
+    window.history.pushState = function (
+      data: any,
+      unused: string,
+      url?: string | URL | null
+    ) {
+      originalPushState.call(window.history, data, unused, url)
+
+      // Defer React state update until after the history operation.
+      queueMicrotask(() => {
+        readUrl()
+      })
+    }
+
+    window.history.replaceState = function (
+      data: any,
+      unused: string,
+      url?: string | URL | null
+    ) {
+      originalReplaceState.call(window.history, data, unused, url)
+
+      queueMicrotask(() => {
+        readUrl()
+      })
+    }
+
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.history.pushState = originalPushState
+      window.history.replaceState = originalReplaceState
+      window.removeEventListener('popstate', handlePopState)
+    }
   }, [readUrl])
 
-  useLayoutEffect(() => {
-    const previous = window.history.scrollRestoration
-    window.history.scrollRestoration = 'manual'
-    return () => {
-      window.history.scrollRestoration = previous
-    }
-  }, [])
+  useEffect(() => {
+    if (typeof window === 'undefined') return
 
-  useLayoutEffect(() => {
-    if (!urlKey) return
-    return () => {
-      offsets.set(urlKey, window.scrollY)
+    const save = () => {
+      saveScrollPosition()
     }
+
+    window.addEventListener('scroll', save, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', save)
+    }
+  }, [saveScrollPosition])
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !urlKey) return
+
+    const key = urlKey
+    const savedPosition = scrollPositions.current[key]
+
+    const restore = () => {
+      if (isPopState.current && savedPosition !== undefined) {
+        window.scrollTo({
+          top: savedPosition,
+          behavior: 'auto',
+        })
+
+        isPopState.current = false
+      } else {
+        window.scrollTo({
+          top: 0,
+          behavior: 'auto',
+        })
+      }
+    }
+
+    // Allow Next.js navigation/rendering to complete first.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(restore)
+    })
   }, [urlKey])
 
-  useLayoutEffect(() => {
-    if (!urlKey) return
-    const top = popNavigation ? (offsets.get(urlKey) ?? 0) : 0
-    window.scrollTo({ top, left: 0, behavior: 'instant' })
-  }, [urlKey, pathname])
+  return {
+    urlKey,
+    saveScrollPosition,
+  }
 }
