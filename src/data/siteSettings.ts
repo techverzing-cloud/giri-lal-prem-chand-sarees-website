@@ -8,7 +8,7 @@ export const siteSettings: SiteSettings = {
   favicon: '/favicon.svg',
   faviconApple: '/favicon/apple-touch-icon.png',
   address: 'Chandni Chowk, New Delhi, India',
-  phone: '011-47504836',
+  phone: '+918750032358',
   whatsapp: '+919876543210',
   email: 'hello@girilalpremchand.com',
   businessHours: 'Mon–Sat: 10:00 AM – 8:00 PM | Sun: 11:00 AM – 6:00 PM',

@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { SlidersHorizontal, X } from 'lucide-react'
@@ -22,7 +22,9 @@ import { cn } from '@/utils/cn'
 export default function CategoryDetailPage() {
   const { category: categorySlug } = useParams<{ category: string }>()
   const router = useRouter()
-  const brandFromPath = window.location.pathname.includes('/sarees/') ? 'girilal' : 'arunima'
+  // `window` does not exist while this renders on the server, so the brand is
+  // read from the router instead. Every lehenga category belongs to Arunima.
+  const brandFromPath: BrandKey = usePathname().includes('/sarees/') ? 'girilal' : 'arunima'
 
   const category = categorySlug ? getCategoryBySlug(brandFromPath, categorySlug) : undefined
 

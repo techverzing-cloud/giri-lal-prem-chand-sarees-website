@@ -139,7 +139,10 @@ export function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8 }}
         onClick={scrollDown}
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/50 transition-colors hover:text-white"
+        // `min-h-11` keeps the tap target at the 44px minimum; the scroll cue
+        // measured 55x39px on mobile, which is under that. `lg:min-h-0` restores
+        // the original intrinsic height so the desktop hero is untouched.
+        className="absolute bottom-8 left-1/2 z-10 flex min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-2 text-white/50 transition-colors hover:text-white lg:min-h-0"
         aria-label="Scroll down"
         type="button"
       >

@@ -1,13 +1,31 @@
 import type { Product } from '@/types'
 import { siteConfig } from '@/config/site'
-import { motion } from 'framer-motion'
+import { cn } from '@/utils/cn'
 
 interface BrandHeritageProps {
   product: Product
 }
 
+/**
+ * Heritage / Designer Label card on the product page.
+ *
+ * The Giri Lal Prem Chand ("Heritage") variant keeps its original flat
+ * gradient, unchanged. The Arunima ("Designer Label") variant paints
+ * `/products/DesignerLabel.png` as a decorative CSS background layer rather
+ * than an `<img>`, because the artwork repeats no information the copy does not
+ * already carry — the layer is `aria-hidden` and the card is a single `<h3>`.
+ *
+ * Layer order, bottom to top: a solid `bg-night` base so the rounded corners
+ * and the fade stay dark; the artwork, cover-fitted and scaled a little on
+ * hover; two darkening gradients that hold the left and middle quiet so the
+ * copy keeps its contrast and the fabric stays toward the right and bottom;
+ * then a translucent brand tint and the content. The artwork is never allowed
+ * to sit over the text, and the gradients fade it into the card so it does not
+ * read as a separate rectangular image.
+ */
 export function BrandHeritage({ product }: BrandHeritageProps) {
   const isGiriLal = product.brand === 'girilal'
+  const isDesignerLabel = !isGiriLal
 
   const heritage = isGiriLal
     ? {
@@ -34,8 +52,35 @@ export function BrandHeritage({ product }: BrandHeritageProps) {
       }
 
   return (
-    <div className="overflow-hidden rounded-lg bg-night">
-      <div className={`bg-gradient-to-br ${heritage.gradient} p-8 md:p-10`}>
+    <div
+      className={cn(
+        'group relative overflow-hidden rounded-lg bg-night',
+        isDesignerLabel && 'shadow-lg shadow-night/10 ring-1 ring-inset ring-white/[0.06]'
+      )}
+    >
+      {isDesignerLabel && (
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat motion-safe:transition-transform motion-safe:duration-[900ms] motion-safe:ease-out group-hover:scale-[1.03]"
+            style={{ backgroundImage: "url('/products/DesignerLabel.png')" }}
+          />
+
+          {/* Stacked once the text spans the full card width. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-night via-night/85 to-night/55 lg:bg-gradient-to-r lg:from-night lg:via-night/90 lg:to-night/30" />
+
+          {/* Cinematic vignette, keeping the corners settled. */}
+          <div className="absolute inset-0 bg-gradient-to-br from-night/40 via-transparent to-night/35" />
+        </div>
+      )}
+
+      <div
+        className={cn(
+          'relative p-8 md:p-10',
+          isDesignerLabel
+            ? 'bg-gradient-to-br from-[#344646]/60 to-[#232E2E]/75'
+            : `bg-gradient-to-br ${heritage.gradient}`
+        )}
+      >
         <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-white/60">
           {heritage.tag}
         </span>

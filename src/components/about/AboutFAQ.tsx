@@ -11,8 +11,9 @@ export function AboutFAQ() {
           title="Questions About Our Legacy"
           description="Everything you need to know about Giri Lal Prem Chand Sarees."
         />
-        <div className="mx-auto mt-10 max-w-3xl">
-          <FAQAccordion />
+        {/* Widened from max-w-3xl so two columns keep a comfortable measure. */}
+        <div className="mx-auto mt-10 max-w-5xl">
+          <FAQAccordion columns={2} />
         </div>
       </Container>
     </section>

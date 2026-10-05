@@ -11,16 +11,18 @@ export const CATEGORIES: Category[] = [
   { id: 'g-festive', name: 'Festive Sarees', slug: 'festive', brand: 'girilal', description: 'Celebrate every occasion with our festive collection.', image: '/collections/festiveSaree.jpg', productCount: 10 },
   { id: 'g-party', name: 'Party Wear', slug: 'party', brand: 'girilal', description: 'Elegant sarees for celebrations and special occasions.', image: '/collections/party-wear-saree.jpg', productCount: 8 },
   { id: 'g-printed', name: 'Printed Sarees', slug: 'printed', brand: 'girilal', description: 'Beautifully printed sarees with modern designs.', image: '/collections/printedSaree.jpg', productCount: 6 },
-  { id: 'g-bridal', name: 'Bridal Collection', slug: 'bridal', brand: 'girilal', description: 'The ultimate bridal trousseau for your special day.', image: '/collections/bridalCollection.jpg', productCount: 8 },
 
-  { id: 'a-bridal', name: 'Bridal Lehengas', slug: 'bridal', brand: 'arunima', description: 'Exquisite bridal lehengas for your unforgettable day.', image: '/collections/bridalLehenga.jpg', productCount: 10 },
-  { id: 'a-designer', name: 'Designer Lehengas', slug: 'designer', brand: 'arunima', description: 'Contemporary designer lehengas for the modern woman.', image: '/collections/designerLehenga.jpg', productCount: 12 },
-  { id: 'a-reception', name: 'Reception Lehengas', slug: 'reception', brand: 'arunima', description: 'Elegant reception wear with modern sophistication.', image: '/collections/receptionLehenga.jpg', productCount: 8 },
-  { id: 'a-cocktail', name: 'Cocktail Lehengas', slug: 'cocktail', brand: 'arunima', description: 'Chic cocktail lehengas for evening celebrations.', image: '/collections/cocktailLehengas.jpg', productCount: 6 },
-  { id: 'a-engagement', name: 'Engagement Lehengas', slug: 'engagement', brand: 'arunima', description: 'Beautiful lehengas for your engagement ceremony.', image: '/collections/engagement.jpg', productCount: 7 },
+
+  { id: 'g-bridal', name: 'Bridal Collection', slug: 'bridal', brand: 'arunima', description: 'The ultimate bridal trousseau for your special day.', image: '/girilal/bridal-lehenga/bridalLehenga1.png', productCount: 8 },
+
+  { id: 'a-bridal', name: 'Bridal Lehengas', slug: 'bridal', brand: 'arunima', description: 'Exquisite bridal lehengas for your unforgettable day.', image: '/girilal/bridal-lehenga/bridalLehenga5.png', productCount: 10 },
+  { id: 'a-designer', name: 'Designer Lehengas', slug: 'designer', brand: 'arunima', description: 'Contemporary designer lehengas for the modern woman.', image: '/collections/designerLehenga.jpg', productCount: 3 },
+  { id: 'a-reception', name: 'Reception Lehengas', slug: 'reception', brand: 'arunima', description: 'Elegant reception wear with modern sophistication.', image: '/girilal/Reception-Lehenga/receptionLenhenga1.png', productCount: 8 },
+  { id: 'a-cocktail', name: 'Cocktail Lehengas', slug: 'cocktail', brand: 'arunima', description: 'Chic cocktail lehengas for evening celebrations.', image: '/girilal/Cocktail-Lehenga/cocktail4.png', productCount: 6 },
+  { id: 'a-engagement', name: 'Engagement Lehengas', slug: 'engagement', brand: 'arunima', description: 'Beautiful lehengas for your engagement ceremony.', image: '/girilal/engagement-Lehenga/eg7.png', productCount: 7 },
   { id: 'a-luxury', name: 'Luxury Couture', slug: 'luxury', brand: 'arunima', description: 'Haute couture lehengas for the discerning client.', image: '/collections/luxury.jpg', productCount: 5 },
-  { id: 'a-wedding', name: 'Wedding Collection', slug: 'wedding', brand: 'arunima', description: 'Complete wedding trousseau for the modern bride.', image: '/collections/wedding.jpg', productCount: 9 },
-  { id: 'a-premium', name: 'Premium Collection', slug: 'premium', brand: 'arunima', description: 'Our most exclusive premium designer pieces.', image: '/collections/premium.jpg', productCount: 6 },
+  { id: 'a-wedding', name: 'Wedding Collection', slug: 'wedding', brand: 'arunima', description: 'Complete wedding trousseau for the modern bride.', image: '/girilal/bridal-lehenga/bridalLehenga7.png', productCount: 9 },
+  { id: 'a-premium', name: 'Premium Collection', slug: 'premium', brand: 'arunima', description: 'Our most exclusive premium designer pieces.', image: '/girilal/bridal-lehenga/bridalLehenga3.png', productCount: 6 },
 ]
 
 export function getCategoriesByBrand(brand: BrandKey): Category[] {

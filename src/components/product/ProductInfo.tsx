@@ -1,11 +1,17 @@
 import type { Product } from '@/types'
 import { siteConfig } from '@/config/site'
+import { LuxuryBadge } from '@/components/ui/LuxuryBadge'
 import { cn } from '@/utils/cn'
 
 interface ProductInfoProps {
   product: Product
 }
 
+/**
+ * Right-hand column of the product page: brand line, name, price, description
+ * and the attribute grid. Only fields present on `Product` are rendered, and
+ * badges are omitted when the product is neither new nor featured.
+ */
 export function ProductInfo({ product }: ProductInfoProps) {
   const brandName = product.brand === 'girilal'
     ? siteConfig.brand.girilal.name
@@ -17,6 +23,15 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
   return (
     <div className="space-y-6">
+      {(product.new || product.featured) && (
+        <div className="flex flex-wrap items-center gap-2">
+          {product.new && <LuxuryBadge variant="primary" size="sm">New Arrival</LuxuryBadge>}
+          {product.featured && !product.new && (
+            <LuxuryBadge variant="accent" size="sm">Featured</LuxuryBadge>
+          )}
+        </div>
+      )}
+
       <div>
         <div className="flex items-center gap-3">
           <span className="font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">
@@ -26,11 +41,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <span className="font-body text-[11px] text-text-muted">{brandSince}</span>
         </div>
 
-        <h1 className="mt-4 font-heading text-3xl font-medium leading-tight text-night md:text-4xl lg:text-5xl">
+        <h1 className="mt-4 font-heading text-3xl font-medium leading-tight text-balance text-night md:text-4xl lg:text-5xl">
           {product.name}
         </h1>
 
-        <p className="mt-4 font-heading text-lg leading-relaxed text-text-secondary">
+        <p className="mt-4 max-w-[60ch] font-heading text-lg leading-relaxed text-text-secondary">
           {product.description}
         </p>
       </div>
@@ -70,6 +85,24 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <p className="mt-1 font-body text-sm capitalize text-night">{product.category}</p>
         </div>
       </div>
+
+      {product.tags.length > 0 && (
+        <div>
+          <span className="font-body text-[11px] font-semibold uppercase tracking-[0.15em] text-text-muted">
+            Tags
+          </span>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {product.tags.map((tag) => (
+              <li
+                key={tag}
+                className="rounded-full border border-night/10 px-3 py-1 font-body text-xs capitalize text-night"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

@@ -146,58 +146,12 @@ export const FABRICS = [
   },
 ]
 
-export const FEATURED_PRODUCTS = [
-  {
-    id: 'p1',
-    name: 'Kanchipuram Silk Saree',
-    collection: 'Wedding Collection',
-    fabric: 'Pure Kanchipuram Silk',
-    price: 'Enquire',
-    image: '/products/royalBanarsi.jpg',
-    tag: 'New',
-    href: '/product/kanchipuram-silk-saree',
-  },
-  {
-    id: 'p2',
-    name: 'Banarasi Zari Lehenga',
-    collection: 'Designer Lehengas',
-    fabric: 'Banarasi Silk with Zari',
-    price: 'Enquire',
-    image: '/products/banarasiLehenga.jpg',
-    tag: 'Featured',
-    href: '/product/banarasi-zari-lehenga',
-  },
-  {
-    id: 'p3',
-    name: 'Tussar Silk Designer Saree',
-    collection: 'Designer Collection',
-    fabric: 'Pure Tussar Silk',
-    price: 'Enquire',
-    image: '/products/crimsonBridalSilk.jpg',
-    tag: 'Best Seller',
-    href: '/product/tussar-silk-designer-saree',
-  },
-  {
-    id: 'p4',
-    name: 'Bridal Lehenga Set',
-    collection: 'Bridal Collection',
-    fabric: 'Silk & Velvet',
-    price: 'Enquire',
-    image: '/products/bridalLehenga.jpg',
-    tag: 'Premium',
-    href: '/product/bridal-lehenga-set',
-  },
-  {
-    id: 'p5',
-    name: 'Paithani Silk Saree',
-    collection: 'Heritage Collection',
-    fabric: 'Pure Paithani Silk',
-    price: 'Enquire',
-    image: '/products/banarasi.jpg',
-    tag: 'Heritage',
-    href: '/product/paithani-silk-saree',
-  },
-]
+// The homepage "Featured Products" rail used to be declared here as a
+// hand-written list of five products. Every slug in it was absent from the
+// catalogue, so all five cards linked to the product-not-found state. The rail
+// now derives from the real catalogue via
+// `getFeaturedProductsForRail()` in `src/data/products`, which is the single
+// source of product data and types.
 
 export const WHY_CHOOSE_US = [
   {

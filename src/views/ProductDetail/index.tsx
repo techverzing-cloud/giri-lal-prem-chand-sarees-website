@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
+'use client'
+
+import { useEffect, useLayoutEffect, useState } from 'react'
 import Link from 'next/link'
-import { SEOHead } from '@/components/seo'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Mail } from 'lucide-react'
+import type { Product } from '@/types'
 import { PageTransition } from '@/components/animations/PageTransition'
 import { Container } from '@/components/ui/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
-import { AnimatedDivider } from '@/components/ui/AnimatedDivider'
+import { LuxuryButton } from '@/components/ui/LuxuryButton'
 import { ProductGallery } from '@/components/product/ProductGallery'
-import { GalleryLightbox } from '@/components/product/GalleryLightbox'
 import { ProductInfo } from '@/components/product/ProductInfo'
-import { ColourSelector } from '@/components/product/ColourSelector'
 import { ProductHighlights } from '@/components/product/ProductHighlights'
 import { CraftsmanshipSection } from '@/components/product/CraftsmanshipSection'
 import { CareInstructions } from '@/components/product/CareInstructions'
@@ -19,83 +18,112 @@ import { BrandHeritage } from '@/components/product/BrandHeritage'
 import { ShareProduct } from '@/components/product/ShareProduct'
 import { EnquiryModal } from '@/components/product/EnquiryModal'
 import { StickyEnquiryPanel } from '@/components/product/StickyEnquiryPanel'
-import { SkeletonProductPage } from '@/components/product/SkeletonProductPage'
 import { ProductCard } from '@/components/shop/ProductCard'
 import { RecentlyViewed, addToRecentlyViewed } from '@/components/shop/RecentlyViewed'
-import { useProductGallery } from '@/hooks/useProductGallery'
-import { getProductBySlug, getRelatedProducts } from '@/data/products'
-import { getProductMeta } from '@/utils/productSeo'
+import { getRelatedProducts } from '@/data/products'
+import { getCategoryBySlug } from '@/data/categories'
 
-export default function ProductDetailPage() {
-  const { slug } = useParams<{ slug: string }>()
-  const [product, setProduct] = useState(getProductBySlug(slug ?? ''))
+interface ProductDetailPageProps {
+  product: Product
+}
+
+/** `useLayoutEffect` without React's server-render warning. */
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
+
+/**
+ * Product details view.
+ *
+ * The route (`app/(site)/product/[slug]/page.tsx`) is a server component that
+ * resolves the slug from the catalogue, calls `notFound()` for unknown slugs
+ * and exports `generateMetadata`. This view receives the product as a prop, so
+ * there is no client-side lookup, no loading skeleton and no second source of
+ * product data.
+ */
+export default function ProductDetailPage({ product }: ProductDetailPageProps) {
   const [enquiryOpen, setEnquiryOpen] = useState(false)
 
-  const gallery = useProductGallery(product?.images.length ?? 0)
+  // The homepage Featured Products rail links here with `?from=home-featured`,
+  // which asks for the product's primary image alone. Reading it here rather
+  // than in the route keeps `/product/[slug]` statically pre-rendered for every
+  // product. The layout effect runs before paint, so the gallery is never
+  // visibly swapped out.
+  const [singleImage, setSingleImage] = useState(false)
+
+  useIsomorphicLayoutEffect(() => {
+    const from = new URLSearchParams(window.location.search).get('from')
+    if (from === 'home-featured') setSingleImage(true)
+  }, [])
 
   useEffect(() => {
-    const p = getProductBySlug(slug ?? '')
-    setProduct(p ?? undefined)
-    if (p) addToRecentlyViewed(p.id)
-  }, [slug])
+    addToRecentlyViewed(product.id)
+  }, [product.id])
 
-  if (product === undefined) {
-    return <SkeletonProductPage />
-  }
-
-  if (!product) {
-    return (
-      <PageTransition>
-        <section className="flex min-h-screen items-center justify-center">
-          <div className="text-center">
-            <h1 className="font-heading text-4xl text-night">Product Not Found</h1>
-            <p className="mt-4 font-body text-text-secondary">The product you are looking for does not exist.</p>
-            <Link href="/collections" className="mt-6 inline-flex items-center gap-2 font-body text-sm text-primary hover:underline">
-              <ArrowLeft className="size-4" /> Back to Collections
-            </Link>
-          </div>
-        </section>
-      </PageTransition>
-    )
-  }
-
-  const meta = getProductMeta(product)
   const isGiriLal = product.brand === 'girilal'
   const accentColor = isGiriLal ? 'bg-primary' : 'bg-dark'
-  const brandCollectionHref = `/collections/${isGiriLal ? 'sarees' : 'lehengas'}`
-  const relatedProducts = getRelatedProducts(product)
+  const collectionLabel = isGiriLal ? 'Sarees' : 'Lehengas'
+  const collectionHref = `/collections/${isGiriLal ? 'sarees' : 'lehengas'}`
+  const category = getCategoryBySlug(product.brand, product.category)
+  const relatedProducts = getRelatedProducts(product, 4)
 
   return (
     <PageTransition>
-      <SEOHead
-        title={product.name}
-        description={meta.description}
-        path={`/product/${product.slug}`}
-        ogImage={meta.ogImage}
-        structuredData={meta.jsonLd}
-      />
-
       <div className="min-h-screen pt-20 md:pt-24">
         <Container>
-          <div className="py-6 md:py-8">
-            <nav className="flex items-center gap-2 font-body text-xs text-text-muted">
-              <Link href="/" className="hover:text-night transition-colors">Home</Link>
-              <span>/</span>
-              <Link href={brandCollectionHref} className="hover:text-night transition-colors">
-                {isGiriLal ? 'Sarees' : 'Lehengas'}
-              </Link>
-              <span>/</span>
-              <span className="text-night line-clamp-1">{product.name}</span>
-            </nav>
-          </div>
+          <nav aria-label="Breadcrumb" className="py-6 md:py-8">
+            <ol className="flex flex-wrap items-center gap-2 font-body text-xs text-text-muted">
+              <li>
+                <Link href="/" className="transition-colors hover:text-night">
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link href={collectionHref} className="transition-colors hover:text-night">
+                  {collectionLabel}
+                </Link>
+              </li>
+              {category && (
+                <>
+                  <li aria-hidden="true">/</li>
+                  <li>
+                    <Link
+                      href={`${collectionHref}/${category.slug}`}
+                      className="transition-colors hover:text-night"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                </>
+              )}
+              <li aria-hidden="true">/</li>
+              <li className="line-clamp-1 text-night" aria-current="page">
+                {product.name}
+              </li>
+            </ol>
+          </nav>
 
-          <div className="grid gap-10 pb-12 lg:grid-cols-2 lg:pb-20">
-            <ProductGallery images={product.images} productName={product.name} />
+          <div className="grid items-start gap-10 pb-12 lg:grid-cols-2 lg:gap-16 lg:pb-20">
+            <div className="lg:sticky lg:top-28">
+              <ProductGallery
+                images={product.images}
+                productName={product.name}
+                singleImage={singleImage}
+              />
+            </div>
             <div className="flex flex-col gap-8">
               <ProductInfo product={product} />
-              <ColourSelector colors={product.colors} />
+              <LuxuryButton
+                type="button"
+                variant="primary"
+                size="lg"
+                fullWidth
+                onClick={() => setEnquiryOpen(true)}
+                icon={<Mail className="size-4" />}
+              >
+                Enquire for Price
+              </LuxuryButton>
               <Link
-                href={brandCollectionHref}
+                href={collectionHref}
                 className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:text-primary/70"
               >
                 <ArrowLeft className="size-3" />
@@ -103,17 +131,6 @@ export default function ProductDetailPage() {
               </Link>
             </div>
           </div>
-
-          <GalleryLightbox
-            isOpen={gallery.isLightboxOpen}
-            images={product.images}
-            currentIndex={gallery.currentIndex}
-            productName={product.name}
-            onClose={gallery.closeLightbox}
-            onGoTo={gallery.goTo}
-            onGoNext={gallery.goNext}
-            onGoPrev={gallery.goPrev}
-          />
         </Container>
 
         <section className="py-section bg-cream/50">
@@ -205,7 +222,7 @@ export default function ProductDetailPage() {
             <Container>
               <SectionTitle
                 subtitle="Related"
-                title="Explore Similar Pieces"
+                title="You May Also Like"
                 description="You might also love these exquisite creations."
               />
               <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">

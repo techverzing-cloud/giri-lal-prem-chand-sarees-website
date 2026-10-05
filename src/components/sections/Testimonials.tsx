@@ -93,7 +93,7 @@ export function Testimonials() {
           <div className="mt-10 flex items-center justify-center gap-4">
             <button
               onClick={goPrev}
-              className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white/50 transition-colors hover:border-white/50 hover:text-white"
+              className="flex size-11 items-center justify-center rounded-full border border-white/20 text-white/50 transition-colors hover:border-white/50 hover:text-white lg:size-10"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="size-5" />
@@ -104,19 +104,27 @@ export function Testimonials() {
                 <button
                   key={index}
                   onClick={() => goTo(index)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    index === current
-                      ? 'w-8 bg-primary'
-                      : 'w-1.5 bg-white/20 hover:bg-white/40'
-                  }`}
+                  // The visible dot is a 6px bar; the button is now a larger
+                  // transparent hit area around it. The arrow buttons already
+                  // give this row a 44px height, so this adds no extra height.
+                  className="flex h-11 items-center justify-center px-1 lg:h-auto"
                   aria-label={`Go to testimonial ${index + 1}`}
-                />
+                  aria-current={index === current}
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all duration-500 ${
+                      index === current
+                        ? 'w-8 bg-primary'
+                        : 'w-1.5 bg-white/20 hover:bg-white/40'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
             <button
               onClick={goNext}
-              className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white/50 transition-colors hover:border-white/50 hover:text-white"
+              className="flex size-11 items-center justify-center rounded-full border border-white/20 text-white/50 transition-colors hover:border-white/50 hover:text-white lg:size-10"
               aria-label="Next testimonial"
             >
               <ChevronRight className="size-5" />

@@ -86,6 +86,17 @@
     text-wrap: balance;
   }
 
+  /* Horizontal rails (featured products, gallery thumbnails, category chips)
+     scroll by touch but should not draw a scrollbar. */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
   .bg-texture {
     background-image: url('/textures/fabric.png');
     background-size: 200px 200px;

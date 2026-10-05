@@ -5,7 +5,16 @@ import { FAQ_ITEMS } from '@/constants/enquiry'
 import { AnalyticsEvents } from '@/services/analytics'
 import { cn } from '@/utils/cn'
 
-export function FAQAccordion() {
+interface FAQAccordionProps {
+  /**
+   * `1` keeps the items in a single stacked list. `2` spreads the same items,
+   * in the same order, across two columns on tablet and up. The FAQ content,
+   * open/close behaviour and markup are identical either way.
+   */
+  columns?: 1 | 2
+}
+
+export function FAQAccordion({ columns = 1 }: FAQAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   function toggle(index: number) {
@@ -15,7 +24,16 @@ export function FAQAccordion() {
   }
 
   return (
-    <div className="space-y-3">
+    <div
+      className={cn(
+        columns === 2
+          ? // Mobile-first: one column until there is room for two. `items-start`
+            // keeps each card at its natural height instead of stretching it to
+            // match the tallest card in its row.
+            'grid items-start gap-3 md:grid-cols-2 md:gap-x-6'
+          : 'space-y-3'
+      )}
+    >
       {FAQ_ITEMS.map((item, index) => (
         <div
           key={index}

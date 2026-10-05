@@ -43,7 +43,7 @@ export const siteConfig: SiteConfig = {
   },
   contact: {
     email: 'info@girilalpremchand.com',
-    phone: '011-47504836',
+    phone: '+918750032358',
     whatsapp: '+919876543210',
     address: 'Gali Jutte Wali, 1st Floor, Nai Sarak, Chandni Chowk, Delhi, 110006',
     googleMapsUrl: 'https://maps.app.goo.gl/oKVTu8w7juU9t4pHA',

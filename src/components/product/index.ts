@@ -1,7 +1,6 @@
 export { ProductGallery } from './ProductGallery'
 export { GalleryLightbox } from './GalleryLightbox'
 export { ProductInfo } from './ProductInfo'
-export { ColourSelector } from './ColourSelector'
 export { EnquiryModal } from './EnquiryModal'
 export { StickyEnquiryPanel } from './StickyEnquiryPanel'
 export { ProductHighlights } from './ProductHighlights'

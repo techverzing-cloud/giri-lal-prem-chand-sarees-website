@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useProductGallery } from '@/hooks/useProductGallery'
 
 interface GalleryLightboxProps {
   isOpen: boolean
@@ -44,6 +43,7 @@ export function GalleryLightbox({
                 {currentIndex + 1} / {images.length}
               </p>
               <button
+                type="button"
                 onClick={onClose}
                 className="flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 aria-label="Close lightbox"
@@ -53,13 +53,16 @@ export function GalleryLightbox({
             </div>
 
             <div className="flex flex-1 items-center justify-center px-4">
-              <button
-                onClick={onGoPrev}
-                className="absolute left-4 z-10 flex size-12 items-center justify-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="size-6" />
-              </button>
+              {images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={onGoPrev}
+                  className="absolute left-4 z-10 flex size-12 items-center justify-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="size-6" />
+                </button>
+              )}
 
               <motion.div
                 key={currentIndex}
@@ -69,33 +72,55 @@ export function GalleryLightbox({
                 transition={{ duration: 0.3 }}
                 className="flex max-h-[70vh] max-w-[90vw] items-center justify-center"
               >
-                <div className="aspect-[3/4] max-h-[70vh] w-full max-w-[500px] rounded-lg bg-gradient-to-br from-primary/10 to-accent/10" />
+                <img
+                  src={images[currentIndex]}
+                  alt={
+                    images.length > 1
+                      ? `${productName} — image ${currentIndex + 1} of ${images.length}`
+                      : productName
+                  }
+                  className="aspect-[3/4] max-h-[70vh] w-full max-w-[500px] rounded-lg bg-night object-cover"
+                />
               </motion.div>
 
-              <button
-                onClick={onGoNext}
-                className="absolute right-4 z-10 flex size-12 items-center justify-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
-                aria-label="Next image"
-              >
-                <ChevronRight className="size-6" />
-              </button>
+              {images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={onGoNext}
+                  className="absolute right-4 z-10 flex size-12 items-center justify-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="size-6" />
+                </button>
+              )}
             </div>
 
-            <div className="flex items-center justify-center gap-2 px-6 py-6">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => onGoTo(i)}
-                  className={`h-12 w-10 overflow-hidden rounded transition-all duration-300 ${
-                    i === currentIndex
-                      ? 'scale-110 ring-2 ring-white opacity-100'
-                      : 'opacity-40 hover:opacity-70'
-                  }`}
-                >
-                  <div className="h-full w-full bg-gradient-to-br from-primary/10 to-accent/10" />
-                </button>
-              ))}
-            </div>
+            {images.length > 1 && (
+              <div className="flex items-center justify-center gap-2 overflow-x-auto px-6 py-6 scrollbar-none">
+                {images.map((image, i) => (
+                  <button
+                    key={`${image}-${i}`}
+                    type="button"
+                    onClick={() => onGoTo(i)}
+                    className={`h-12 w-10 flex-shrink-0 overflow-hidden rounded transition-all duration-300 ${
+                      i === currentIndex
+                        ? 'scale-110 ring-2 ring-white opacity-100'
+                        : 'opacity-40 hover:opacity-70'
+                    }`}
+                    aria-label={`Go to image ${i + 1} of ${images.length}`}
+                    aria-current={i === currentIndex}
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </motion.div>
       )}

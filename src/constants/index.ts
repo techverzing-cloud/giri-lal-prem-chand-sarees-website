@@ -8,8 +8,8 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/collections',
     children: [
       { label: 'All Collections', href: '/collections' },
-      { label: 'Giri Lal Prem Chand Sarees â€” Sarees', href: '/collections/sarees', brand: 'girilal' },
-      { label: 'Arunima Fashions â€” Lehengas', href: '/collections/lehengas', brand: 'arunima' },
+      { label: 'Giri Lal Prem Chand Sarees-Sarees', href: '/collections/sarees', brand: 'girilal' },
+      { label: 'Arunima Fashions-Lehengas', href: '/collections/lehengas', brand: 'arunima' },
     ],
   },
   {

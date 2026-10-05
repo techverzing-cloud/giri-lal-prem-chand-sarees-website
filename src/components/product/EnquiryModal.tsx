@@ -7,6 +7,7 @@ import type { Product } from '@/types'
 import type { EnquiryFormValues } from '@/types/enquiry'
 import { ENQUIRY_EVENT_TYPES } from '@/types/enquiry'
 import { useEnquiry } from '@/hooks/useEnquiry'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 import { buildEnquiryPayload } from '@/services/enquiry'
 import { AnalyticsEvents } from '@/services/analytics'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
@@ -36,6 +37,7 @@ interface EnquiryModalProps {
 
 export function EnquiryModal({ isOpen, onClose, product }: EnquiryModalProps) {
   const enquiry = useEnquiry()
+  useLockBodyScroll(isOpen)
   const brandName = product.brand === 'girilal'
     ? siteConfig.brand.girilal.name
     : siteConfig.brand.arunima.name

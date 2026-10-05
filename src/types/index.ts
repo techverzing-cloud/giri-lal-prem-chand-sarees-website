@@ -106,6 +106,13 @@ export interface Product {
   fabric: string
   price: number
   description: string
+  /**
+   * The product's own picture, and the only thing that needs editing to swap it.
+   * `images` is always derived from this value, so a card, Quick View, detail
+   * page and SEO image can never disagree. Optional because saree products still
+   * only carry `images`.
+   */
+  image?: string
   images: string[]
   colors: string[]
   occasion: string

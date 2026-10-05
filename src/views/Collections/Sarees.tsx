@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { PageTransition } from '@/components/animations/PageTransition'
 import { CollectionBanner } from '@/components/shop/CollectionBanner'
@@ -5,13 +6,16 @@ import { Container } from '@/components/ui/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { CategoryGrid } from '@/components/shop/CategoryGrid'
 import { ProductGrid } from '@/components/shop/ProductGrid'
+import { QuickViewModal } from '@/components/shop/QuickViewModal'
 import { getCategoriesByBrand, CATEGORIES } from '@/data/categories'
 import { getFeaturedProducts } from '@/data/products'
 import { SAREE_PAGE_FEATURED_IMAGES, withFeaturedImages } from '@/data/products/images'
+import type { Product } from '@/types'
 import { siteConfig } from '@/config/site'
 
 export default function SareesPage() {
   const sareeCategories = getCategoriesByBrand('girilal')
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
   const featured = withFeaturedImages(
     getFeaturedProducts('girilal').slice(0, 4),
     SAREE_PAGE_FEATURED_IMAGES
@@ -53,11 +57,16 @@ export default function SareesPage() {
               description="Our most exquisite sarees, handpicked for you."
             />
             <div className="mt-12">
-              <ProductGrid products={featured} columns={4} />
+              <ProductGrid products={featured} columns={4} onQuickView={setQuickViewProduct} />
             </div>
           </Container>
         </section>
       )}
+
+      <QuickViewModal
+        product={quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
     </PageTransition>
   )
 }

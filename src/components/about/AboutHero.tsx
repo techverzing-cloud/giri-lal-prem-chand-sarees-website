@@ -9,7 +9,7 @@ interface AboutHeroProps {
 
 export function AboutHero({ onCtaClick }: AboutHeroProps) {
   return (
-    <section className="relative flex min-h-[85vh] items-center mt-28 justify-center overflow-hidden bg-night">
+    <section className="relative flex min-h-[85vh] items-center justify-center pt-20 md:pt-24 overflow-hidden bg-night">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-night to-night" />
       <div className="absolute inset-0 opacity-[0.04]" style={{
         backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',

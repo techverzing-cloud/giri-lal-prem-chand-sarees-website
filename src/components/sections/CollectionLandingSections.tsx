@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
@@ -6,10 +7,12 @@ import { SectionTitle } from '@/components/ui/SectionTitle'
 import { LuxuryButton } from '@/components/ui/LuxuryButton'
 import { CategoryGrid } from '@/components/shop/CategoryGrid'
 import { ProductGrid } from '@/components/shop/ProductGrid'
+import { QuickViewModal } from '@/components/shop/QuickViewModal'
 import { CATEGORIES } from '@/data/categories'
 import { FILTER_GROUPS } from '@/data/filters'
 import { getFeaturedProducts } from '@/data/products'
 import { LANDING_SAREES_FEATURED_IMAGES, withFeaturedImages } from '@/data/products/images'
+import type { Product } from '@/types'
 
 const OCCASIONS = [
   { label: 'Wedding', slug: 'wedding', image: '/collections/wedding-sarees.jpg', gradient: 'from-[#8E2D29] to-[#6E201D]' },
@@ -21,6 +24,7 @@ const OCCASIONS = [
 ]
 
 export function CollectionLandingSections() {
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
   const featuredProducts = withFeaturedImages(
     getFeaturedProducts().slice(0, 4),
     LANDING_SAREES_FEATURED_IMAGES
@@ -120,7 +124,7 @@ export function CollectionLandingSections() {
               description="Our most exquisite pieces, handpicked for the discerning client."
             />
             <div className="mt-12">
-              <ProductGrid products={featuredProducts} columns={4} />
+              <ProductGrid products={featuredProducts} columns={4} onQuickView={setQuickViewProduct} />
             </div>
             <div className="mt-10 text-center">
               <Link href="/collections">
@@ -132,6 +136,11 @@ export function CollectionLandingSections() {
           </Container>
         </section>
       )}
+
+      <QuickViewModal
+        product={quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
     </>
   )
 }

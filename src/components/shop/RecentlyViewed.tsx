@@ -40,10 +40,10 @@ export function RecentlyViewed() {
         <div className="flex items-center justify-between">
           <div>
             <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-text-muted">
-              Recently Viewed
+              Most Viewed
             </span>
             <h2 className="mt-2 font-heading text-2xl text-night md:text-3xl">
-              Your Recent Selections
+              Popular With Our Visitors
             </h2>
           </div>
         </div>

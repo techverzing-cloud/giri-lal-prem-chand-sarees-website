@@ -46,6 +46,7 @@ export function Navbar() {
   }
 
   return (
+    <>
     <header
       className={cn(
         'fixed left-0 right-0 top-0 z-[999] transition-all duration-700',
@@ -163,7 +164,11 @@ export function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className={cn(
-              'relative z-10 lg:hidden',
+              // `flex ... items-center justify-center` gives the icon a real box
+              // to centre in (as a bare flex item the inline SVG sat on the text
+              // baseline and looked off-centre), and `size-11` raises the tap
+              // area to the 44px minimum without changing the 24px glyph.
+              'relative z-10 flex size-11 shrink-0 items-center justify-center lg:hidden',
               isTransparent ? 'text-white' : 'text-night'
             )}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -174,8 +179,19 @@ export function Navbar() {
           </button>
         </nav>
       </Container>
+    </header>
 
-      <AnimatePresence>
+    {/*
+      The mobile menu MUST stay a sibling of <header>, never a child of it.
+      When the page is scrolled the header picks up `backdrop-blur-xl`, and an
+      element with a `backdrop-filter` becomes the containing block for its
+      `position: fixed` descendants. Nesting this overlay inside <header> made
+      its `inset-0` resolve against the ~81px header instead of the viewport, so
+      the panel collapsed to a 128px sliver and all but the first link was
+      unreachable. As a sibling the header's z-[999] still paints above the
+      overlay's z-[998], so the close button stays visible and clickable.
+    */}
+    <AnimatePresence>
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
@@ -183,12 +199,12 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            className="fixed inset-0 top-0 z-[998] flex flex-col overflow-y-auto bg-night px-6 pb-8 pt-24"
+            className="fixed inset-0 top-0 z-[998] flex flex-col overflow-y-auto bg-night px-6 pb-8 pt-20 md:pt-24"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
           >
-            <nav className="flex flex-col gap-2">
+            <nav className="flex flex-col gap-1.5 md:gap-2">
               {NAV_ITEMS.map((item, index) => (
                 <motion.div
                   key={item.href}
@@ -236,6 +252,6 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   )
 }
