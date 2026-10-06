@@ -23,6 +23,8 @@ const itemVariants = {
   },
 }
 
+const ARUNIMA_INSTAGRAM_URL = 'https://www.instagram.com/arunimafashions'
+
 export function InstagramGallery() {
   return (
     <section className="bg-surface py-section lg:py-section-lg">
@@ -68,7 +70,7 @@ export function InstagramGallery() {
           ))}
         </motion.div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-center">
           <a
             href={siteConfig.social.instagram}
             target="_blank"
@@ -76,7 +78,16 @@ export function InstagramGallery() {
             className="inline-flex items-center gap-2 border-b border-night/20 pb-1 font-body text-xs font-semibold uppercase tracking-[0.2em] text-night transition-all duration-300 hover:border-primary hover:text-primary"
           >
             <Instagram className="size-4" />
-            Follow on Instagram
+            Girilal Premchand Sarees
+          </a>
+          <a
+            href={ARUNIMA_INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border-b border-night/20 pb-1 font-body text-xs font-semibold uppercase tracking-[0.2em] text-night transition-all duration-300 hover:border-primary hover:text-primary"
+          >
+            <Instagram className="size-4" />
+            Arunima Fashion
           </a>
         </div>
       </Container>

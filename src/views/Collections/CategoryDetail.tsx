@@ -9,11 +9,10 @@ import { Breadcrumb } from '@/components/layout/Breadcrumb'
 import { ProductGrid } from '@/components/shop/ProductGrid'
 import { QuickViewModal } from '@/components/shop/QuickViewModal'
 import { FilterSidebar } from '@/components/shop/FilterSidebar'
-import { SortDropdown } from '@/components/shop/SortDropdown'
 import { Pagination } from '@/components/shop/Pagination'
 import { EmptyState } from '@/components/shop/EmptyState'
 import { RelatedCollections } from '@/components/shop/RelatedCollections'
-import type { Product, BrandKey, SortOption, ActiveFilter } from '@/types'
+import type { Product, BrandKey, ActiveFilter } from '@/types'
 import { getCategoriesByBrand, getCategoryBySlug, CATEGORIES } from '@/data/categories'
 import { getProductsByCategory, filterProducts } from '@/data/products'
 import { siteConfig } from '@/config/site'
@@ -29,7 +28,6 @@ export default function CategoryDetailPage() {
   const category = categorySlug ? getCategoryBySlug(brandFromPath, categorySlug) : undefined
 
   const [activeFilters, setActiveFilters] = useState<ActiveFilter[]>([])
-  const [sort, setSort] = useState<SortOption>('newest')
   const [page, setPage] = useState(1)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
@@ -40,8 +38,8 @@ export default function CategoryDetailPage() {
   )
 
   const result = useMemo(
-    () => filterProducts(allProducts, activeFilters, sort, page, 12),
-    [allProducts, activeFilters, sort, page]
+    () => filterProducts(allProducts, activeFilters, 'newest', page, 12),
+    [allProducts, activeFilters, page]
   )
 
   const relatedCategories = useMemo(() => {
@@ -129,6 +127,7 @@ export default function CategoryDetailPage() {
                   activeFilters={activeFilters}
                   onToggleFilter={handleToggleFilter}
                   onClearFilters={handleClearFilters}
+                  products={allProducts}
                 />
               </div>
             </div>
@@ -154,7 +153,6 @@ export default function CategoryDetailPage() {
                       </span>
                     )}
                   </button>
-                  <SortDropdown value={sort} onChange={setSort} />
                 </div>
               </div>
 
@@ -186,6 +184,7 @@ export default function CategoryDetailPage() {
         activeFilters={activeFilters}
         onToggleFilter={handleToggleFilter}
         onClearFilters={handleClearFilters}
+        products={allProducts}
         isOpen={showMobileFilters}
         onClose={() => setShowMobileFilters(false)}
         isMobile

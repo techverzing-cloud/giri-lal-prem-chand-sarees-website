@@ -7,11 +7,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck, X } from 'lucide-react'
 import { useConsent } from '@/hooks/useConsent'
 import {
+  getConsent,
   getPanelRequestCount,
   subscribeToPanelRequests,
 } from '@/lib/consent'
 import {
   CONSENT_CATEGORIES,
+  CONSENT_STORAGE_KEY,
   COOKIE_POLICY_ROUTE,
   PRIVACY_POLICY_ROUTE,
   PRIVACY_POLICY_VERSION,
@@ -87,12 +89,15 @@ export function ConsentBanner() {
 
   // Show on first visit of this policy version.
   useEffect(() => {
-    if (!hasDecided) setIsOpen(true)
+    if (!hasDecided && getConsent().status === 'undecided') setIsOpen(true)
   }, [hasDecided])
 
   // If the version is bumped while the tab is open, ask again.
   useEffect(() => {
-    const onVersionChange = () => setIsOpen(true)
+    const onVersionChange = (event: StorageEvent) => {
+      if (event.key !== null && event.key !== CONSENT_STORAGE_KEY) return
+      if (getConsent().status === 'undecided') setIsOpen(true)
+    }
 
     window.addEventListener('storage', onVersionChange)
 

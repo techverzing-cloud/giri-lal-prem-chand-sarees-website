@@ -5,12 +5,44 @@ import { LEHENGAS } from './lehengas'
 
 export const ALL_PRODUCTS: Product[] = [...SAREES, ...LEHENGAS]
 
+/**
+ * Normalises a category/filter keyword for comparison: lowercased, trimmed,
+ * with spaces, underscores and repeated hyphens collapsed into one hyphen.
+ * "Party Wear", "party wear", "Party_Wear" and "party-wear" all become
+ * "party-wear", so keywords match regardless of how they were written.
+ */
+export function normalizeFilterKey(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
 export function getProductsByBrand(brand: BrandKey): Product[] {
   return ALL_PRODUCTS.filter((p) => p.brand === brand)
 }
 
+/**
+ * Exact keyword match of a category against one product, never a substring
+ * test: the normalised keyword must equal the product's category or its
+ * subcategory (the product's type). Equality on normalised keys means
+ * "bridal" can only ever return bridal pieces, "Party Wear" and "party_wear"
+ * resolve to the "party" collection, and free-form marketing tags can never
+ * leak an unrelated product into a collection.
+ */
+function matchesCategory(product: Product, categoryKey: string): boolean {
+  return (
+    normalizeFilterKey(product.category) === categoryKey ||
+    normalizeFilterKey(product.subcategory) === categoryKey
+  )
+}
+
 export function getProductsByCategory(brand: BrandKey, category: string): Product[] {
-  return ALL_PRODUCTS.filter((p) => p.brand === brand && p.category === category)
+  const categoryKey = normalizeFilterKey(category)
+  if (!categoryKey) return []
+  return ALL_PRODUCTS.filter((p) => p.brand === brand && matchesCategory(p, categoryKey))
 }
 
 /**
@@ -101,25 +133,45 @@ export function getNewProducts(brand?: BrandKey): Product[] {
   return products.filter((p) => p.new)
 }
 
-export function filterProducts(
-  products: Product[],
-  filters: ActiveFilter[],
-  sort: SortOption = 'newest',
-  page = 1,
-  pageSize = 12
-): ProductSearchResult {
+/**
+ * Fabric keywords are matched on normalised whole tokens, so "silk" matches
+ * "Banarasi Silk" and "Silk Blend with Net Dupatta" on a word boundary while
+ * never matching a word that merely contains the letters (no substring drift).
+ */
+function matchesFabricKeyword(fabric: string, keyword: string): boolean {
+  const target = normalizeFilterKey(keyword)
+  if (!target) return false
+  const fabricKey = normalizeFilterKey(fabric)
+  if (fabricKey === target) return true
+
+  const tokens = fabricKey.split('-')
+  const targetTokens = target.split('-')
+  for (let i = 0; i + targetTokens.length <= tokens.length; i++) {
+    if (targetTokens.every((token, offset) => tokens[i + offset] === token)) return true
+  }
+  return false
+}
+
+/**
+ * Applies the sidebar filters to a product list and returns the products that
+ * match every active filter. Exported so the UI's option counts can be derived
+ * from the exact same predicate that produces the grid, keeping the displayed
+ * numbers and the visible products permanently in agreement.
+ */
+export function applyFilters(products: Product[], filters: ActiveFilter[]): Product[] {
   let filtered = [...products]
 
   for (const filter of filters) {
+    const valueKey = normalizeFilterKey(filter.value)
     switch (filter.groupId) {
       case 'fabric':
-        filtered = filtered.filter((p) => p.fabric.toLowerCase().includes(filter.value.toLowerCase()))
+        filtered = filtered.filter((p) => matchesFabricKeyword(p.fabric, filter.value))
         break
       case 'occasion':
-        filtered = filtered.filter((p) => p.occasion === filter.value)
+        filtered = filtered.filter((p) => normalizeFilterKey(p.occasion) === valueKey)
         break
       case 'color':
-        filtered = filtered.filter((p) => p.colors.includes(filter.value))
+        filtered = filtered.filter((p) => p.colors.some((c) => normalizeFilterKey(c) === valueKey))
         break
       case 'price': {
         const [min, max] = filter.value.split('-').map(Number)
@@ -131,6 +183,18 @@ export function filterProducts(
         break
     }
   }
+
+  return filtered
+}
+
+export function filterProducts(
+  products: Product[],
+  filters: ActiveFilter[],
+  sort: SortOption = 'newest',
+  page = 1,
+  pageSize = 12
+): ProductSearchResult {
+  let filtered = applyFilters(products, filters)
 
   switch (sort) {
     case 'newest':

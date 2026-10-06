@@ -3,6 +3,7 @@
 import { useCallback, useSyncExternalStore } from 'react'
 import {
   getConsent,
+  getServerConsent,
   subscribeToConsent,
   setConsent,
   clearConsent,
@@ -31,7 +32,7 @@ export function useConsent(): ConsentState & {
   /** Withdraw and reset to undecided. */
   withdraw: () => void
 } {
-  const state = useSyncExternalStore(subscribeToConsent, getConsent, getConsent)
+  const state = useSyncExternalStore(subscribeToConsent, getConsent, getServerConsent)
 
   const hasDecided = state.status === 'decided'
   const granted = state.record?.granted ?? []

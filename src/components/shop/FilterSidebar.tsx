@@ -1,13 +1,20 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronDown, RotateCcw } from 'lucide-react'
-import type { FilterGroup, ActiveFilter } from '@/types'
+import type { FilterGroup, ActiveFilter, Product } from '@/types'
 import { FILTER_GROUPS } from '@/data/filters'
+import { applyFilters } from '@/data/products'
 import { cn } from '@/utils/cn'
 
 interface FilterSidebarProps {
   activeFilters: ActiveFilter[]
   onToggleFilter: (groupId: string, value: string) => void
   onClearFilters: () => void
+  /**
+   * The product set currently being filtered. When supplied, every option's
+   * count is computed from it with the same predicate that builds the grid,
+   * so the number beside a checkbox always equals what selecting it shows.
+   */
+  products?: Product[]
   isOpen?: boolean
   onClose?: () => void
   isMobile?: boolean
@@ -17,13 +24,18 @@ function FilterGroup({
   group,
   activeFilters,
   onToggleFilter,
+  products,
 }: {
   group: FilterGroup
   activeFilters: ActiveFilter[]
   onToggleFilter: (groupId: string, value: string) => void
+  products?: Product[]
 }) {
   const isActive = (value: string) =>
     activeFilters.some((f) => f.groupId === group.id && f.value === value)
+
+  const countFor = (value: string, fallback: number) =>
+    products ? applyFilters(products, [{ groupId: group.id, value }]).length : fallback
 
   return (
     <div className="border-b border-night/5 pb-6">
@@ -45,7 +57,7 @@ function FilterGroup({
             <span className="flex-1 font-body text-sm text-text-secondary group-hover:text-night transition-colors">
               {option.label}
             </span>
-            <span className="font-body text-xs text-text-muted">({option.count})</span>
+            <span className="font-body text-xs text-text-muted">({countFor(option.value, option.count)})</span>
           </label>
         ))}
       </div>
@@ -57,6 +69,7 @@ export function FilterSidebar({
   activeFilters,
   onToggleFilter,
   onClearFilters,
+  products,
   isOpen = true,
   onClose,
   isMobile = false,
@@ -82,6 +95,7 @@ export function FilterSidebar({
           group={group}
           activeFilters={activeFilters}
           onToggleFilter={onToggleFilter}
+          products={products}
         />
       ))}
     </div>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import type { Category } from '@/types'
+import { getProductsByCategory } from '@/data/products'
 
 interface CategoryCardProps {
   category: Category
@@ -12,6 +13,10 @@ export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
   const href = category.brand === 'girilal'
     ? `/collections/sarees/${category.slug}`
     : `/collections/lehengas/${category.slug}`
+
+  // Same lookup the category page uses, so the badge always shows exactly the
+  // number of products a click-through will display.
+  const productCount = getProductsByCategory(category.brand, category.slug).length
 
   return (
     <motion.div
@@ -38,7 +43,7 @@ export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
             <p className="mt-2 font-body text-sm text-white/60 line-clamp-2">{category.description}</p>
             <div className="mt-4 flex items-center justify-between">
               <span className="font-body text-xs text-white/50">
-                {category.productCount} {category.productCount === 1 ? 'Product' : 'Products'}
+                {productCount} {productCount === 1 ? 'Product' : 'Products'}
               </span>
               <span className="flex items-center gap-1 font-body text-xs font-semibold uppercase tracking-[0.15em] text-white/60 transition-all duration-300 group-hover:text-white">
                 Explore <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-1" />

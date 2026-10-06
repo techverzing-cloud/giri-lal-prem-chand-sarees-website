@@ -140,6 +140,11 @@ export function getConsent(): ConsentState {
   return read()
 }
 
+/** Snapshot for SSR and the hydration render, where browser storage cannot be read. */
+export function getServerConsent(): ConsentState {
+  return UNDECIDED
+}
+
 /** Whether a specific optional category is currently allowed. */
 export function hasConsent(category: ConsentCategory): boolean {
   const state = read()
