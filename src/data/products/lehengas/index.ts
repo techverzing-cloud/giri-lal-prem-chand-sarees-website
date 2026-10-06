@@ -67,27 +67,27 @@ const PREMIUM_LEHENGAS: Product[] = [
 
 const DESIGNER_LEHENGAS: Product[] = [
   p('ad001', 'Regal Maroon Designer Lehenga', '/girilal/bridal-lehenga/bridalLehenga14.png', 'regal-maroon-designer-lehenga', 'designer', 'designer', 'Georgette', 85000, ['maroon', 'gold'], 'cocktail', true, false, ['designer', 'georgette', 'regal']),
-  p('ad002', 'Festive Gold Designer Lehenga', '/girilal/Party-wear/pw4.png', 'festive-gold-designer-lehenga', 'designer', 'designer', 'Net', 78000, ['gold', 'ivory'], 'party', false, false, ['designer', 'net', 'festive']),
-  p('ad003', 'Silk Wine Designer Lehenga', '/girilal/cocktail-Lehenga/cocktail3.png', 'silk-wine-designer-lehenga', 'designer', 'designer', 'Silk', 72000, ['wine', 'gold'], 'party', true, true, ['designer', 'silk', 'wine']),
-  p('ad004', 'Bronze Party Designer Lehenga', '/girilal/cocktail-Lehenga/cocktail2.png', 'bronze-party-designer-lehenga', 'designer', 'designer', 'Chiffon', 65000, ['bronze', 'gold'], 'party', false, false, ['designer', 'chiffon', 'party']),
+  p('ad002', 'Festive Gold Designer Lehenga', '/girilal/party-wear/pw4.png', 'festive-gold-designer-lehenga', 'designer', 'designer', 'Net', 78000, ['gold', 'ivory'], 'party', false, false, ['designer', 'net', 'festive']),
+  p('ad003', 'Silk Wine Designer Lehenga', '/girilal/cocktail-lehenga/cocktail3.png', 'silk-wine-designer-lehenga', 'designer', 'designer', 'Silk', 72000, ['wine', 'gold'], 'party', true, true, ['designer', 'silk', 'wine']),
+  p('ad004', 'Bronze Party Designer Lehenga', '/girilal/cocktail-lehenga/cocktail2.png', 'bronze-party-designer-lehenga', 'designer', 'designer', 'Chiffon', 65000, ['bronze', 'gold'], 'party', false, false, ['designer', 'chiffon', 'party']),
 ]
 
 const COCKTAIL_LEHENGAS: Product[] = [
-  p('ac001', 'Noir Velvet Cocktail Lehenga', '/girilal/cocktail-Lehenga/cocktail1.png', 'noir-velvet-cocktail-lehenga', 'cocktail', 'cocktail', 'Velvet', 68000, ['black', 'gold'], 'cocktail', true, false, ['cocktail', 'velvet', 'evening']),
-  p('ac002', 'Pearl Shimmer Cocktail Lehenga', '/girilal/cocktail-Lehenga/cocktail5.png', 'pearl-shimmer-cocktail-lehenga', 'cocktail', 'cocktail', 'Net', 72000, ['ivory', 'silver'], 'cocktail', false, false, ['cocktail', 'net', 'shimmer']),
-  p('ac003', 'Blush Satin Cocktail Lehenga', '/girilal/cocktail-Lehenga/cocktail4.png', 'blush-satin-cocktail-lehenga', 'cocktail', 'cocktail', 'Chiffon', 75000, ['pink', 'ivory'], 'cocktail', true, true, ['cocktail', 'chiffon', 'satin']),
+  p('ac001', 'Noir Velvet Cocktail Lehenga', '/girilal/cocktail-lehenga/cocktail1.png', 'noir-velvet-cocktail-lehenga', 'cocktail', 'cocktail', 'Velvet', 68000, ['black', 'gold'], 'cocktail', true, false, ['cocktail', 'velvet', 'evening']),
+  p('ac002', 'Pearl Shimmer Cocktail Lehenga', '/girilal/cocktail-lehenga/cocktail5.png', 'pearl-shimmer-cocktail-lehenga', 'cocktail', 'cocktail', 'Net', 72000, ['ivory', 'silver'], 'cocktail', false, false, ['cocktail', 'net', 'shimmer']),
+  p('ac003', 'Blush Satin Cocktail Lehenga', '/girilal/cocktail-lehenga/cocktail4.png', 'blush-satin-cocktail-lehenga', 'cocktail', 'cocktail', 'Chiffon', 75000, ['pink', 'ivory'], 'cocktail', true, true, ['cocktail', 'chiffon', 'satin']),
 ]
 
 const RECEPTION_LEHENGAS: Product[] = [
-  p('ar001', 'Champagne Reception Lehenga', '/girilal/cocktail-Lehenga/cocktail3.png', 'champagne-reception-lehenga', 'reception', 'reception', 'Organza', 145000, ['gold', 'ivory'], 'reception', true, false, ['reception', 'organza', 'champagne']),
-  p('ar002', 'Antique Bronze Reception Lehenga', '/girilal/Reception-Lehenga/receptionLehenga2.png', 'antique-bronze-reception-lehenga', 'reception', 'reception', 'Silk', 158000, ['bronze', 'gold'], 'reception', false, false, ['reception', 'silk', 'antique']),
-  p('ar003', 'Deep Wine Reception Lehenga', '/girilal/Reception-Lehenga/receptionLehenga3.png', 'deep-wine-reception-lehenga', 'reception', 'reception', 'Georgette', 168000, ['wine', 'gold'], 'reception', true, true, ['reception', 'georgette', 'glamour']),
+  p('ar001', 'Champagne Reception Lehenga', '/girilal/cocktail-lehenga/cocktail3.png', 'champagne-reception-lehenga', 'reception', 'reception', 'Organza', 145000, ['gold', 'ivory'], 'reception', true, false, ['reception', 'organza', 'champagne']),
+  p('ar002', 'Antique Bronze Reception Lehenga', '/girilal/reception-lehenga/receptionLehenga2.png', 'antique-bronze-reception-lehenga', 'reception', 'reception', 'Silk', 158000, ['bronze', 'gold'], 'reception', false, false, ['reception', 'silk', 'antique']),
+  p('ar003', 'Deep Wine Reception Lehenga', '/girilal/reception-lehenga/receptionLehenga3.png', 'deep-wine-reception-lehenga', 'reception', 'reception', 'Georgette', 168000, ['wine', 'gold'], 'reception', true, true, ['reception', 'georgette', 'glamour']),
 ]
 
 const ENGAGEMENT_LEHENGAS: Product[] = [
-  p('ae001', 'Golden Engagement Lehenga', '/girilal/Party-wear/pw4.png', 'golden-engagement-lehenga', 'engagement', 'engagement', 'Net', 95000, ['gold', 'ivory'], 'engagement', true, false, ['engagement', 'net', 'glow']),
-  p('ae002', 'Ember Party Engagement Lehenga', '/girilal/Party-wear/pw2.png', 'ember-party-engagement-lehenga', 'engagement', 'engagement', 'Georgette', 88000, ['red', 'gold'], 'engagement', false, false, ['engagement', 'georgette', 'festive']),
-  p('ae003', 'Bronze Tissue Engagement Lehenga', '/girilal/Party-wear/pw3.png', 'bronze-tissue-engagement-lehenga', 'engagement', 'engagement', 'Tissue', 102000, ['bronze', 'gold'], 'engagement', true, true, ['engagement', 'tissue', 'sheen']),
+  p('ae001', 'Golden Engagement Lehenga', '/girilal/party-wear/pw4.png', 'golden-engagement-lehenga', 'engagement', 'engagement', 'Net', 95000, ['gold', 'ivory'], 'engagement', true, false, ['engagement', 'net', 'glow']),
+  p('ae002', 'Ember Party Engagement Lehenga', '/girilal/party-wear/pw2.png', 'ember-party-engagement-lehenga', 'engagement', 'engagement', 'Georgette', 88000, ['red', 'gold'], 'engagement', false, false, ['engagement', 'georgette', 'festive']),
+  p('ae003', 'Bronze Tissue Engagement Lehenga', '/girilal/party-wear/pw3.png', 'bronze-tissue-engagement-lehenga', 'engagement', 'engagement', 'Tissue', 102000, ['bronze', 'gold'], 'engagement', true, true, ['engagement', 'tissue', 'sheen']),
 ]
 
 /**
