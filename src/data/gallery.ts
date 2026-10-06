@@ -9,9 +9,9 @@ export interface GalleryImage {
 
 export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 'g-1', src: 'girilal/bridal-lehenga/bridalLehenga3.png', alt: 'Our flagship store in Chandni Chowk', width: 800, height: 1000, category: 'store' },
-  { id: 'g-2', src: 'girilal/party-wear/pw3.png', alt: 'Master weaver at the loom', width: 1000, height: 800, category: 'craftsmanship' },
+  { id: 'g-2', src: 'girilal/party-wear/pw1.png', alt: 'Master weaver at the loom', width: 1000, height: 800, category: 'craftsmanship' },
   { id: 'g-3', src: 'girilal/bridal-lehenga/bridalLehenga1.png', alt: 'Bridal lehenga collection display', width: 800, height: 1000, category: 'collection' },
-  { id: 'g-4', src: 'girilal/cocktail-lehenga/cocktail4.png', alt: 'Zardozi embroidery detail work', width: 1000, height: 800, category: 'craftsmanship' },
+  { id: 'g-4', src: 'girilal/cocktail-lehenga/cocktail2.png', alt: 'Zardozi embroidery detail work', width: 1000, height: 800, category: 'craftsmanship' },
   { id: 'g-5', src: 'girilal/bridal-lehenga/bridalLehenga5.png', alt: 'Private consultation lounge', width: 1000, height: 800, category: 'store' },
   { id: 'g-6', src: 'girilal/bridal-lehenga/bridalLehenga6.png', alt: 'Premium silk saree collection', width: 800, height: 1000, category: 'collection' },
   { id: 'g-7', src: '/collections/wedding-sarees.jpg', alt: 'Bridal styling session', width: 1000, height: 800, category: 'event' },
