@@ -9,7 +9,7 @@ export const LANDING_SAREES_FEATURED_IMAGES = [
 
 export const SAREE_PAGE_FEATURED_IMAGES = [
   '/Saree/wedding-saree/weddingSaree1.png',
-  '/Saree/Wedding-saree/weddingSaree2.png',
+  '/Saree/wedding-saree/weddingSaree2.png',
   '/Saree/silk-saree/silkSaree1.png',
   '/Saree/silk-saree/silkSaree2.png',
 ] as const
