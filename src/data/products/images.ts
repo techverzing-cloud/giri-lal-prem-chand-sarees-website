@@ -1,17 +1,17 @@
 import type { Product } from '@/types'
 
 export const LANDING_SAREES_FEATURED_IMAGES = [
-  '/collections/wedding-sarees.jpg',
-  '/collections/handloomSaree.jpg',
-  '/collections/designerSaree.jpg',
-  '/products/royalBanarsi.jpg',
+  '/Saree/wedding-saree/weddingSaree1.png',
+  '/Saree/wedding-saree/weddingSaree2.png',
+  '/Saree/silk-saree/silkSaree1.png',
+  '/Saree/designer-saree/designerSaree4.png',
 ] as const
 
 export const SAREE_PAGE_FEATURED_IMAGES = [
-  '/products/sarree/royalBanarsi.jpg',
-  '/collections/handloomSaree.jpg',
-  '/products/sarree/designerSaree.jpg',
-  '/products/sarree/wedding-sarees.jpg',
+  '/Saree/wedding-saree/weddingSaree1.png',
+  '/Saree/Wedding-saree/weddingSaree2.png',
+  '/Saree/silk-saree/silkSaree1.png',
+  '/Saree/silk-saree/silkSaree2.png',
 ] as const
 
 /**

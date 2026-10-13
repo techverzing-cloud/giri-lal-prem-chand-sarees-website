@@ -6,6 +6,7 @@ const STYLING = [
   { occasion: 'Festival', desc: 'Celebrate with vibrant accessories and traditional floral jewellery.', gradient: 'from-[#344646] to-[#232E2E]' },
   { occasion: 'Cocktail', desc: 'Style with modern minimal jewellery for a sophisticated evening look.', gradient: 'from-[#E3A2A0] to-[#D48582]' },
   { occasion: 'Traditional Ceremony', desc: 'Complete the look with traditional Bun or Braid hairstyle.', gradient: 'from-[#4A5F5F] to-[#344646]' },
+  { occasion: 'Casual Outing', desc: 'Keep it simple with light jewellery and a casual hairstyle.', gradient: 'from-[#111717] to-[#1E2828]' },
 ]
 
 export function StylingSuggestions() {

@@ -33,7 +33,7 @@ export const adminNavMenus: AdminNavMenu[] = [
     name: 'Social Links',
     items: [
       { id: 'nav-si-1', label: 'Instagram', url: 'https://instagram.com/girilalpremchand', displayOrder: 1, visible: true, openInNewTab: true, icon: 'Instagram' },
-      { id: 'nav-si-2', label: 'Facebook', url: 'https://facebook.com/girilalpremchand', displayOrder: 2, visible: true, openInNewTab: true, icon: 'Facebook' },
+      { id: 'nav-si-2', label: 'Facebook', url: 'https://www.facebook.com/people/Giri-Lal-Prem-Chand-Sarees-Pvt-Ltd/61594655375659/', displayOrder: 2, visible: true, openInNewTab: true, icon: 'Facebook' },
       { id: 'nav-si-3', label: 'YouTube', url: 'https://youtube.com/@girilalpremchand', displayOrder: 3, visible: true, openInNewTab: true, icon: 'Youtube' },
     ],
   },

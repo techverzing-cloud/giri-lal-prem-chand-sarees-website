@@ -122,13 +122,13 @@ export const navigationConfig: NavigationConfig = {
 
   quickLinks: [
     { id: 'ql-enquiry', label: 'Enquire Now', url: '/enquiry', visible: true, icon: 'MessageSquare' },
-    { id: 'ql-whatsapp', label: 'WhatsApp', url: 'https://wa.me/919876543210', visible: true, icon: 'MessageCircle', openInNewTab: true },
-    { id: 'ql-call', label: 'Call Us', url: 'tel:+919876543210', visible: true, icon: 'Phone' },
+    { id: 'ql-whatsapp', label: 'WhatsApp', url: 'https://wa.me/+918750032358', visible: true, icon: 'MessageCircle', openInNewTab: true },
+    { id: 'ql-call', label: 'Call Us', url: 'tel:+918750032358', visible: true, icon: 'Phone' },
   ],
 
   social: [
     { id: 'soc-ig', label: 'Instagram', url: 'https://instagram.com/girilalpremchand', visible: true, icon: 'Instagram', openInNewTab: true },
-    { id: 'soc-fb', label: 'Facebook', url: 'https://facebook.com/girilalpremchand', visible: true, icon: 'Facebook', openInNewTab: true },
+    { id: 'soc-fb', label: 'Facebook', url: 'https://www.facebook.com/people/Giri-Lal-Prem-Chand-Sarees-Pvt-Ltd/61594655375659/', visible: true, icon: 'Facebook', openInNewTab: true },
     { id: 'soc-yt', label: 'YouTube', url: 'https://youtube.com/@girilalpremchand', visible: true, icon: 'Youtube', openInNewTab: true },
     { id: 'soc-pin', label: 'Pinterest', url: 'https://pinterest.com/girilalpremchand', visible: true, icon: 'Pinterest', openInNewTab: true },
   ],

@@ -44,16 +44,18 @@ export const siteConfig: SiteConfig = {
   contact: {
     email: 'info@girilalpremchand.com',
     phone: '+918750032358',
-    whatsapp: '+919876543210',
+    whatsapp: '+918750032358',
     address: 'Gali Jutte Wali, 1st Floor, Nai Sarak, Chandni Chowk, Delhi, 110006',
     googleMapsUrl: 'https://maps.app.goo.gl/oKVTu8w7juU9t4pHA',
     businessHours: 'Mon–Sat: 11:00 AM – 07:30 PM | Sun: Closed',
   },
   social: {
     instagram: 'https://instagram.com/girilalpremchand',
-    facebook: 'https://facebook.com/girilalpremchand',
+    facebook: 'https://www.facebook.com/people/Giri-Lal-Prem-Chand-Sarees-Pvt-Ltd/61594655375659/',
     youtube: 'https://youtube.com/@girilalpremchand',
     pinterest: 'https://pinterest.com/girilalpremchand',
+    x: 'https://x.com/glpcsarees',
+    twitter: 'https://x.com/glpcsarees',
   },
   seo: {
     title: 'Giri Lal Prem Chand Sarees | Luxury Sarees & Designer Lehengas Since 1946',

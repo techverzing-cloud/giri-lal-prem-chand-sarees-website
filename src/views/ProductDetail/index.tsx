@@ -210,8 +210,9 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
               subtitle="Share"
               title="Spread the Beauty"
               description="Share this exquisite piece with someone special."
+              align="center"
             />
-            <div className="mt-8">
+            <div className="mt-8 flex justify-center">
               <ShareProduct product={product} />
             </div>
           </Container>

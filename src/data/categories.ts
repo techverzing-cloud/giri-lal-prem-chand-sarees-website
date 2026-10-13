@@ -1,15 +1,15 @@
 import type { Category, BrandKey } from '@/types'
 
 export const CATEGORIES: Category[] = [
-  { id: 'g-wedding', name: 'Wedding Sarees', slug: 'wedding', brand: 'girilal', description: 'Exquisite bridal sarees adorned with intricate zari and hand-embroidered details.', image: '/collections/wedding-sarees.jpg', productCount: 12 },
-  { id: 'g-silk', name: 'Silk Sarees', slug: 'silk', brand: 'girilal', description: 'Luxurious pure silk sarees from India\'s finest weaving traditions.', image: '/collections/kanjivaram.jpg', productCount: 18 },
-  { id: 'g-banarasi', name: 'Banarasi Sarees', slug: 'banarasi', brand: 'girilal', description: 'Timeless Banarasi silk sarees woven with pure gold and silver zari.', image: '/collections/banarasi.jpg', productCount: 15 },
-  { id: 'g-cotton', name: 'Cotton Sarees', slug: 'cotton', brand: 'girilal', description: 'Handwoven cotton sarees with exceptional breathability and comfort.', image: '/collections/cottonSaree.jpg', productCount: 10 },
-  { id: 'g-designer', name: 'Designer Sarees', slug: 'designer', brand: 'girilal', description: 'Contemporary designer sarees blending tradition with modern aesthetics.', image: '/collections/designerSaree.jpg', productCount: 14 },
-  { id: 'g-handloom', name: 'Handloom Sarees', slug: 'handloom', brand: 'girilal', description: 'Masterfully handwoven sarees preserving India\'s rich textile heritage.', image: '/collections/handloomSaree.jpg', productCount: 10 },
-  { id: 'g-traditional', name: 'Traditional Sarees', slug: 'traditional', brand: 'girilal', description: 'Classic traditional sarees for timeless elegance.', image: '/collections/traditionalSaree.jpg', productCount: 8 },
-  { id: 'g-festive', name: 'Festive Sarees', slug: 'festive', brand: 'girilal', description: 'Celebrate every occasion with our festive collection.', image: '/collections/festiveSaree.jpg', productCount: 10 },
-  { id: 'g-party', name: 'Party Wear', slug: 'party', brand: 'girilal', description: 'Elegant sarees for celebrations and special occasions.', image: '/collections/party-wear-saree.jpg', productCount: 8 },
+  { id: 'g-wedding', name: 'Wedding Sarees', slug: 'wedding', brand: 'girilal', description: 'Exquisite bridal sarees adorned with intricate zari and hand-embroidered details.', image: '/Saree/wedding-saree/weddingSaree1.png', productCount: 2 },
+  { id: 'g-silk', name: 'Silk Sarees', slug: 'silk', brand: 'girilal', description: 'Luxurious pure silk sarees from India\'s finest weaving traditions.', image: '/Saree/silk-saree/silkSaree1.png', productCount: 18 },
+  { id: 'g-banarasi', name: 'Banarasi Sarees', slug: 'banarasi', brand: 'girilal', description: 'Timeless Banarasi silk sarees woven with pure gold and silver zari.', image: '/Saree/banarasi-saree/banarasi1.png', productCount: 15 },
+  { id: 'g-cotton', name: 'Cotton Sarees', slug: 'cotton', brand: 'girilal', description: 'Handwoven cotton sarees with exceptional breathability and comfort.', image: '/Saree/cotton-saree/cottonSaree1.png', productCount: 10 },
+  { id: 'g-designer', name: 'Designer Sarees', slug: 'designer', brand: 'girilal', description: 'Contemporary designer sarees blending tradition with modern aesthetics.', image: '/Saree/designer-saree/designerSaree1.png', productCount: 14 },
+  { id: 'g-handloom', name: 'Handloom Sarees', slug: 'handloom', brand: 'girilal', description: 'Masterfully handwoven sarees preserving India\'s rich textile heritage.', image: '/Saree/handloom-saree/handloomSaree1.png', productCount: 10 },
+  { id: 'g-traditional', name: 'Traditional Sarees', slug: 'traditional', brand: 'girilal', description: 'Classic traditional sarees for timeless elegance.', image: '/Saree/traditional-saree/traditionalSaree1.png', productCount: 8 },
+  { id: 'g-festive', name: 'Festive Sarees', slug: 'festive', brand: 'girilal', description: 'Celebrate every occasion with our festive collection.', image: '/Saree/festive-saree/festiveSaree1.png', productCount: 10 },
+  { id: 'g-party', name: 'Party Wear', slug: 'party', brand: 'girilal', description: 'Elegant sarees for celebrations and special occasions.', image: '/Saree/party-wear/partyWear1.png', productCount: 8 },
   { id: 'g-printed', name: 'Printed Sarees', slug: 'printed', brand: 'girilal', description: 'Beautifully printed sarees with modern designs.', image: '/collections/printedSaree.jpg', productCount: 6 },
 
 

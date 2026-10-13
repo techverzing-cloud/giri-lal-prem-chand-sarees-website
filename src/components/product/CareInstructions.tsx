@@ -7,6 +7,7 @@ const INSTRUCTIONS = [
   { icon: Sun, label: 'Avoid Direct Sunlight', desc: 'Prolonged exposure to sunlight may cause colour fading over time.' },
   { icon: Flame, label: 'Iron on Low Heat', desc: 'Use a low heat setting. Avoid ironing directly on embroidery or zari work.' },
   { icon: Box, label: 'Fold Carefully', desc: 'Fold along the weave lines. Avoid sharp creases that may damage the fabric.' },
+  { icon: Box, label: 'Avoid Sprays & Perfumes', desc: 'Keep away from perfumes and deodorants to prevent stains and fabric damage.' },
 ]
 
 export function CareInstructions() {

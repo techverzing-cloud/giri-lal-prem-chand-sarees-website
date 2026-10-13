@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck, X } from 'lucide-react'
 import { useConsent } from '@/hooks/useConsent'
@@ -41,6 +42,9 @@ export function ConsentBanner() {
   const [isCustomising, setIsCustomising] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [draft, setDraft] = useState<ConsentCategory[]>([])
+
+  const pathname = usePathname()
+  const isContactPage = pathname === '/contact' || pathname?.startsWith('/contact')
 
   const panelRef = useRef<HTMLDivElement>(null)
   const acceptRef = useRef<HTMLButtonElement>(null)
@@ -87,22 +91,24 @@ export function ConsentBanner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [panelRequest])
 
-  // Show on first visit of this policy version.
+  // Show on first visit of this policy version only on contact page.
   useEffect(() => {
-    if (!hasDecided && getConsent().status === 'undecided') setIsOpen(true)
-  }, [hasDecided])
+    if (!hasDecided && getConsent().status === 'undecided' && isContactPage) {
+      setIsOpen(true)
+    }
+  }, [hasDecided, isContactPage])
 
-  // If the version is bumped while the tab is open, ask again.
+  // If the version is bumped while the tab is open, ask again only on contact page.
   useEffect(() => {
     const onVersionChange = (event: StorageEvent) => {
       if (event.key !== null && event.key !== CONSENT_STORAGE_KEY) return
-      if (getConsent().status === 'undecided') setIsOpen(true)
+      if (getConsent().status === 'undecided' && isContactPage) setIsOpen(true)
     }
 
     window.addEventListener('storage', onVersionChange)
 
     return () => window.removeEventListener('storage', onVersionChange)
-  }, [])
+  }, [isContactPage])
 
   // Escape closes. The decision is the user's to make, not to postpone forever.
   useEffect(() => {

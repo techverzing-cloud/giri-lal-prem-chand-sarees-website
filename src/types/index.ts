@@ -62,6 +62,8 @@ export interface SocialConfig {
   facebook: string
   youtube?: string
   pinterest?: string
+  x?: string
+  twitter?: string
 }
 
 export interface SEOConfig {
@@ -121,6 +123,15 @@ export interface Product {
   available: boolean
   sku: string
   tags: string[]
+  /**
+   * Collection slugs this product is listed under on `/collections/...`.
+   * Optional and additive: a product can belong to more than one collection
+   * (e.g. a silk party-wear saree sits in both Silk and Party Wear), and a
+   * product with no collections is still a valid catalogue entry. Keeping the
+   * membership on the product itself means a collection page is derived from
+   * the data instead of a separate hardcoded id list.
+   */
+  collections?: string[]
 }
 
 export type BrandKey = 'girilal' | 'arunima'

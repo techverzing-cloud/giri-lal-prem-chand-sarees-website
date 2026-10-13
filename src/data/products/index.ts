@@ -1,6 +1,6 @@
 import type { Product, BrandKey, SortOption, ActiveFilter, ProductSearchResult } from '@/types'
 import { slugify } from '@/utils/helpers'
-import { SAREES } from './sarees'
+import { SAREES, SAREE_COLLECTIONS } from './sarees'
 import { LEHENGAS } from './lehengas'
 
 export const ALL_PRODUCTS: Product[] = [...SAREES, ...LEHENGAS]
@@ -39,9 +39,24 @@ function matchesCategory(product: Product, categoryKey: string): boolean {
   )
 }
 
+/**
+ * Resolves a category's products.
+ *
+ * For Girilal sarees the collection is the explicit membership defined in
+ * `SAREE_COLLECTIONS`, so the products a category card advertises and the grid
+ * a click-through renders always come from the same list. Everything else
+ * (Arunima lehengas, and any category without an explicit list) keeps the
+ * category/subcategory match.
+ */
 export function getProductsByCategory(brand: BrandKey, category: string): Product[] {
   const categoryKey = normalizeFilterKey(category)
   if (!categoryKey) return []
+
+  if (brand === 'girilal') {
+    const collection = SAREE_COLLECTIONS[categoryKey]
+    if (collection) return collection
+  }
+
   return ALL_PRODUCTS.filter((p) => p.brand === brand && matchesCategory(p, categoryKey))
 }
 
@@ -105,9 +120,10 @@ export function getFeaturedProducts(brand?: BrandKey): Product[] {
 /**
  * Selection for the homepage "Featured Products" rail.
  *
- * `getFeaturedProducts()` returns 83 items in catalogue order, which is all 43
- * sarees before any lehenga — on a single-brand storefront that reads as a wall
- * of the same thing. Round-robin across brands keeps both houses on screen, and
+ * `getFeaturedProducts()` returns every featured item in catalogue order,
+ * which is all featured Girilal sarees before any lehenga — on a single-brand
+ * storefront that reads as a wall of the same thing. Round-robin across brands
+ * keeps both houses on screen, and
  * the cap keeps the rail scannable. This replaces a hand-written list that
  * carried slugs absent from the catalogue, so every card resolves to a real
  * product page.

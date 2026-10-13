@@ -8,10 +8,12 @@ export function getShareData(product: { name: string; slug: string }) {
     url,
     text,
     whatsapp: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`,
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+    facebook: 'https://www.facebook.com/people/Giri-Lal-Prem-Chand-Sarees-Pvt-Ltd/61594655375659/',
+    x: 'https://x.com/glpcsarees',
+    
+    instagram: 'https://www.instagram.com/girilalpremchand/',
     copy: url,
-  }
+  } as const
 }
 
 export async function copyToClipboard(text: string): Promise<boolean> {

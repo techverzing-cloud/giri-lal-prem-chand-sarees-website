@@ -4,7 +4,18 @@ import { StoreInformation } from '@/components/enquiry/StoreInformation'
 import { ContactForm } from '@/components/enquiry/ContactForm'
 import { SEOHead } from '@/components/seo'
 
+import { useEffect } from 'react'
+import { requestConsentPanel } from '@/lib/consent'
+
 export default function ContactPage() {
+  useEffect(() => {
+    try {
+      requestConsentPanel()
+    } catch {
+      // no-op
+    }
+  }, [])
+
   return (
     <PageTransition>
       <SEOHead

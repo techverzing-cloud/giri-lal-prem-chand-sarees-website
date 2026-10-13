@@ -42,14 +42,14 @@ export function ProductCard({ product, index = 0, onQuickView }: ProductCardProp
                 </div>
               </div>
             ) : (
-              <img
-                src={product.images[0]}
-                alt={product.name}
-                loading="lazy"
-                decoding="async"
-                onError={() => setImgError(true)}
-                className="h-full w-full object-cover"
-              />
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              loading="lazy"
+              decoding="async"
+              onError={() => setImgError(true)}
+              className="h-full w-full object-cover object-top"
+            />
             )}
           </div>
         </Link>
@@ -61,14 +61,7 @@ export function ProductCard({ product, index = 0, onQuickView }: ProductCardProp
           {product.featured && !product.new && <LuxuryBadge variant="accent" size="sm">Featured</LuxuryBadge>}
         </div>
 
-        <div className="absolute right-3 top-3">
-          <button
-            className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white/70 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:text-white"
-            aria-label="Add to wishlist"
-          >
-            <Heart className="size-4" />
-          </button>
-        </div>
+        
 
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <button

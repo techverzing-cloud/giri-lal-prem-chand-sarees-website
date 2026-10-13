@@ -27,15 +27,15 @@ export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
       className="group relative overflow-hidden rounded-lg bg-night"
     >
       <Link href={href} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden">
+        <div className="relative aspect-[4/5] w-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/30 to-transparent transition-all duration-500" />
           <div
             className="h-full w-full bg-gradient-to-br from-primary/5 to-accent/5 transition-transform duration-700 group-hover:scale-110"
             style={{
-              backgroundImage:
-                `url(${category.image})`,
-                backgroundPosition: 'center center',
-                backgroundSize: 'cover',
+              backgroundImage: `url(${category.image})`,
+              backgroundPosition: category.brand === 'girilal' ? 'center 25%' : 'center 20%',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
             }}
           />
           <div className="absolute bottom-0 left-0 right-0 p-6">
