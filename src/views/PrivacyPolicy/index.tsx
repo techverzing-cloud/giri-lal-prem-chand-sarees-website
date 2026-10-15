@@ -201,6 +201,14 @@ export default function PrivacyPolicyPage() {
               email delivery provider. The email is sent from us to us.
             </li>
             <li>
+              If you left an email address, the server also sends you a short
+              confirmation that we have received your enquiry. It repeats back
+              only what you typed and contains no price, no internal reference
+              and nothing about how you found the site. It is an acknowledgement
+              of your enquiry, not a marketing email, and you will not receive
+              anything else unless you ask us to.
+            </li>
+            <li>
               A member of the team reads it and contacts you using the details
               you gave.
             </li>

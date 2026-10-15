@@ -281,13 +281,17 @@ Browser form
         ├─> Zod validation     (schema duplicated server-side, not trusted)
         ├─> consent check      (z.literal(true), rejects the request if false)
         └─> Resend API         (server-to-server, key never leaves the server)
-              └─> studio inbox
+              ├─> studio inbox                  (notification, replyTo = customer)
+              └─> customer's own address        (confirmation, best-effort)
 ```
 
-- Recipient unchanged: `RESEND_TO_EMAIL`.
-- `replyTo` set to the customer's email, so replying reaches them directly.
-- The customer receives no automatic confirmation. The enquiry is an internal
-  notification, as originally specified.
+- Studio notification recipient: `RESEND_TO_EMAIL`, `replyTo` set to the
+  customer's email so replying reaches them directly.
+- Customer confirmation: sent to the customer when they left an email address,
+  `replyTo` set to `RESEND_TO_EMAIL`. It is a transactional acknowledgement and
+  echoes back only what the visitor typed — no price, device, screen or
+  attribution data. It is best-effort: a delivery failure is logged and does not
+  fail the enquiry, because the studio already has it.
 - API key read only in `src/lib/resend.ts`, whose sole importer is the route
   handler. Verified absent from every file in `.next/static`.
 - The only thing that can fail is delivery: 503 if a variable is missing, 502 if
@@ -354,7 +358,7 @@ Actual measures, not aspirations:
 | `RESEND_API_KEY` server-only, absent from client bundle | `src/lib/resend.ts` |
 | Independent server-side Zod validation | `src/app/api/enquiry/route.ts` |
 | Server-side consent enforcement | same |
-| HTML-escaped email template, no `dangerouslySetInnerHTML` | `src/emails/EnquiryNotificationEmail.ts` |
+| HTML-escaped email templates, no `dangerouslySetInnerHTML` | `src/emails/EnquiryNotificationEmail.ts`, `src/emails/EnquiryConfirmationEmail.ts` |
 | Provider errors logged, never returned | route handler |
 | No personal data in URLs or query strings | forms POST to a route handler |
 | Newsletter no longer logs the submitted payload | `src/services/newsletter/index.ts` |

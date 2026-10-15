@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { sendEnquiryNotification, EmailConfigError, EmailDeliveryError } from '@/lib/resend'
+import { sendEnquiryNotification, sendEnquiryConfirmation, EmailConfigError, EmailDeliveryError } from '@/lib/resend'
 import type { EnquiryPayload } from '@/types/enquiry'
 
 export const runtime = 'nodejs'
@@ -111,7 +111,30 @@ export async function POST(request: Request) {
 
   try {
     const { id } = await sendEnquiryNotification(payload)
-    return NextResponse.json({ success: true, message: SUCCESS_MESSAGE, id })
+
+    // The acknowledgement is best-effort: the studio already has the enquiry,
+    // so a failure here is logged and never turns a successful submission into
+    // an error the visitor has to retry. Skipped when no email was left.
+    try {
+      const confirmation = await sendEnquiryConfirmation(payload)
+      if (!confirmation) {
+        console.info('[enquiry] no customer email supplied; confirmation skipped')
+      }
+    } catch (error) {
+      if (error instanceof EmailDeliveryError) {
+        console.error(`[enquiry] confirmation delivery failed: ${error.message}`)
+      } else {
+        console.error('[enquiry] unexpected error while sending confirmation', error)
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: payload.customer.email
+        ? `${SUCCESS_MESSAGE} A confirmation has also been sent to your email ${payload.customer.email}.`
+        : SUCCESS_MESSAGE,
+      id,
+    })
   } catch (error) {
     if (error instanceof EmailConfigError) {
       // Log which variable is missing server-side; the client only sees a 503.

@@ -1,4 +1,5 @@
 import type { EnquiryPayload } from '@/types/enquiry'
+import { BRAND, CONSULTATION_LABELS, TYPE_LABELS, escapeHtml, isPresent } from '@/emails/theme'
 
 /**
  * Business notification email for website enquiries.
@@ -8,74 +9,18 @@ import type { EnquiryPayload } from '@/types/enquiry'
  * functions returning strings so the template stays easy to edit and needs no
  * extra dependency.
  *
- * To customise: edit the BRAND object below, then the section order. Each
- * section is independent, so you can drop, reorder or replace any one of them
- * without touching the rest.
+ * To customise: edit the shared `BRAND` object in `src/emails/theme.ts`, then the
+ * section order. Each section is independent, so you can drop, reorder or
+ * replace any one of them without touching the rest.
  *
  * NOTE: this is the notification the studio receives. It is not sent to the
- * customer; the customer's address is used as `replyTo` on the API route.
+ * customer; the customer's address is used as `replyTo` on the API route. The
+ * customer-facing acknowledgement lives in `EnquiryConfirmationEmail.ts`.
  */
-
-// ---------------------------------------------------------------------------
-// BRAND - single place to change colours, fonts and the studio name
-// ---------------------------------------------------------------------------
-const BRAND = {
-  name: 'Giri Lal Prem Chand Sarees',
-  tagline: 'Luxury sarees & designer lehengas since 1946',
-  siteUrl: 'https://girilalpremchand.com',
-  primary: '#8E2D29',
-  primaryDark: '#6E201D',
-  gold: '#C9A96E',
-  cream: '#FFF8F3',
-  night: '#111717',
-  body: '#344646',
-  muted: '#6B7B7B',
-  border: '#E5D5CC',
-  surface: '#FFFFFF',
-  headingFont: "'Cormorant Garamond', Georgia, 'Times New Roman', serif",
-  bodyFont: "'Manrope', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif",
-} as const
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-function escapeHtml(value: unknown): string {
-  if (value === null || value === undefined) return ''
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-}
-
-function isPresent(value: unknown): boolean {
-  return value !== null && value !== undefined && String(value).trim() !== ''
-}
-
-const TYPE_LABELS: Record<EnquiryPayload['type'], string> = {
-  PRODUCT: 'Product enquiry',
-  CONSULTATION: 'Consultation request',
-  CONTACT: 'Contact form',
-  BULK_ORDER: 'Bulk order',
-  CUSTOM_DESIGN: 'Custom design',
-  CORPORATE: 'Corporate enquiry',
-}
-
-const CONTACT_LABELS: Record<string, string> = {
-  email: 'Email',
-  phone: 'Phone call',
-  whatsapp: 'WhatsApp',
-}
-
-const CONSULTATION_LABELS: Record<string, string> = {
-  virtual: 'Virtual consultation',
-  store: 'Store visit',
-  wedding: 'Wedding styling',
-  designer: 'Designer consultation',
-  video: 'Video call',
-  personal_shopper: 'Personal shopper',
-}
 
 /** A label/value row. Renders nothing when the value is empty. */
 function row(label: string, value: unknown, options?: { href?: string }): string {
@@ -155,23 +100,6 @@ function header(payload: EnquiryPayload): string {
       </tr>`
 }
 
-function alert(payload: EnquiryPayload): string {
-  const contact = payload.customer?.preferredContact
-  const label = CONTACT_LABELS[contact] ?? ''
-  if (!label) return ''
-
-  return `
-      <tr>
-        <td style="padding:14px 28px;background:${BRAND.primary};">
-          <p style="margin:0;font-size:13px;line-height:20px;color:#FFFFFF;font-family:${BRAND.bodyFont};">
-            <strong style="font-weight:700;">Preferred contact:</strong>
-            ${escapeHtml(label)} &middot; respond within 24 hours.
-          </p>
-        </td>
-      </tr>
-      <tr><td style="height:8px;line-height:8px;font-size:0;">&nbsp;</td></tr>`
-}
-
 function customerSection(payload: EnquiryPayload): string {
   const c = payload.customer ?? ({} as EnquiryPayload['customer'])
   const rows =
@@ -188,8 +116,7 @@ function productSection(payload: EnquiryPayload): string {
   const rows =
     row('Product', p.name) +
     row('SKU', p.sku) +
-    row('Brand', p.brand) +
-    row('Price', isPresent(p.price) ? `₹${Number(p.price).toLocaleString('en-IN')}` : '')
+    row('Brand', p.brand)
   return section('Product', rows)
 }
 
@@ -229,8 +156,6 @@ function trackingSection(payload: EnquiryPayload): string {
     row('Full URL', s.url, { href: s.url }) +
     row('Came from', s.referrer) +
     row('Browser', s.browser) +
-    row('Device', s.device) +
-    row('Screen', s.screenResolution) +
     utmPairs
   return section('Attribution', rows, BRAND.muted)
 }
@@ -276,7 +201,7 @@ export function EnquiryNotificationEmail(payload: EnquiryPayload): string {
 <tr>
 <td align="center">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;border-collapse:collapse;background:${BRAND.surface};border:1px solid ${BRAND.border};border-radius:10px;overflow:hidden;">
-${header(payload)}${alert(payload)}${customerSection(payload)}${messageBlock(
+${header(payload)}${customerSection(payload)}${messageBlock(
     payload.event?.message,
   )}${productSection(payload)}${consultationSection(payload)}${eventSection(
     payload,
@@ -306,7 +231,6 @@ export function enquiryNotificationText(payload: EnquiryPayload): string {
     `  Email:   ${c.email ?? ''}`,
     `  Phone:   ${c.phone ?? ''}`,
     `  City:    ${c.city ?? ''}`,
-    `  Prefers contact by: ${CONTACT_LABELS[c.preferredContact] ?? c.preferredContact ?? ''}`,
   ]
 
   if (isPresent(e?.message)) {
@@ -320,7 +244,6 @@ export function enquiryNotificationText(payload: EnquiryPayload): string {
       `  Name:    ${p.name ?? ''}`,
       `  SKU:     ${p.sku ?? ''}`,
       `  Brand:   ${p.brand ?? ''}`,
-      `  Price:   ${isPresent(p.price) ? `₹${Number(p.price).toLocaleString('en-IN')}` : ''}`,
     )
   }
 
@@ -353,7 +276,7 @@ export function enquiryNotificationText(payload: EnquiryPayload): string {
       `  Page:     ${s.page ?? ''}`,
       `  URL:      ${s.url ?? ''}`,
       `  Referrer: ${s.referrer ?? ''}`,
-      `  Browser:  ${s.browser ?? ''} / ${s.device ?? ''} / ${s.screenResolution ?? ''}`,
+      `  Browser:  ${s.browser ?? ''}`,
     )
   }
 

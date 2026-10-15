@@ -13,9 +13,11 @@ Form (React Hook Form + Zod)
                  └─ sendEnquiryEmail()   src/services/email/index.ts
                       └─ POST /api/enquiry   src/app/api/enquiry/route.ts
                            ├─ Zod validation (server-side, independent of the form)
-                           └─ sendEnquiryNotification()   src/lib/resend.ts
-                                └─ Resend API  →  studio inbox
-                                     └─ HTML  src/emails/EnquiryNotificationEmail.ts
+                           └─ src/lib/resend.ts
+                                ├─ sendEnquiryNotification()  →  studio inbox
+                                │     └─ HTML  src/emails/EnquiryNotificationEmail.ts
+                                └─ sendEnquiryConfirmation()  →  customer (best-effort)
+                                      └─ HTML  src/emails/EnquiryConfirmationEmail.ts
 ```
 
 | Concern | Where |
@@ -25,17 +27,22 @@ Form (React Hook Form + Zod)
 | Browser → API transport | `src/services/email/index.ts` |
 | Validation, HTTP status codes | `src/app/api/enquiry/route.ts` |
 | Resend client, env handling | `src/lib/resend.ts` |
-| Email markup and plain text | `src/emails/EnquiryNotificationEmail.ts` |
+| Shared theme, colours, label maps | `src/emails/theme.ts` |
+| Studio notification markup | `src/emails/EnquiryNotificationEmail.ts` |
+| Customer confirmation markup | `src/emails/EnquiryConfirmationEmail.ts` |
 
-### Business notification only
+### Two emails per enquiry
 
-One email is sent: the notification the studio receives. The customer is not
-emailed automatically. Their address is passed as `replyTo`, so hitting reply in
-the studio's inbox goes straight to them.
+1. **Studio notification** — sent to `RESEND_TO_EMAIL`, with `replyTo` set to the
+   visitor so replying reaches them directly.
+2. **Customer confirmation** — sent to the visitor when they left an email
+   address, with `replyTo` set to `RESEND_TO_EMAIL` so replies land in the
+   studio inbox. Skipped when the email field is blank.
 
-To add a separate customer confirmation later, send a second message in
-`sendEnquiryNotification()` with the customer's address as `to` — the template is
-already split into reusable functions.
+The confirmation is **best-effort**: if Resend rejects it the enquiry is still
+returned as a success (the studio already has it) and the failure is logged
+server-side. It never echoes internal data — no price, no device, screen or
+attribution fields.
 
 ## Environment variables
 
@@ -72,16 +79,17 @@ address that works without a verified domain. Use it only for testing.
 
 ## Customising the email
 
-`src/emails/EnquiryNotificationEmail.ts`:
+`src/emails/theme.ts` is the single place for colours, fonts, the studio name,
+the site URL and the enquiry label maps. Change values there to re-skin both
+emails at once.
 
-- **`BRAND`** at the top holds every colour, the font stacks, the studio name and
-  the site URL. Change values there to re-skin the whole email.
-- Each block is an independent function (`customerSection`, `productSection`,
-  `consultationSection`, `eventSection`, `trackingSection`, `messageBlock`).
-  Reorder or drop any of them in the composition at the bottom of
-  `EnquiryNotificationEmail()`.
-- `enquiryNotificationText()` is the plain-text alternative. Update it alongside
-  any markup change so both parts stay in sync.
+`src/emails/EnquiryNotificationEmail.ts` (studio) and
+`src/emails/EnquiryConfirmationEmail.ts` (customer) are each built from small
+independent section functions (`header`, `summarySection`, `contactSection`,
+`messageBlock`, …). Reorder or drop any of them in the composition at the
+bottom of the exported function. Every template also exports a plain-text
+alternative (`enquiryNotificationText`, `enquiryConfirmationText`) — update it
+alongside any markup change so both parts stay in sync.
 
 Colours currently match `src/styles/globals.css`:
 
@@ -120,9 +128,11 @@ npm run dev
 1. Start the dev server.
 2. Submit the contact form at `/contact`, or a product enquiry from any product
    page.
-3. Confirm the API responds `200` and the email arrives in `RESEND_TO_EMAIL`.
+3. Confirm the API responds `200`, the notification arrives in
+   `RESEND_TO_EMAIL`, and — when an email address was entered — the customer
+   receives the confirmation.
 4. Reply to the notification and confirm it goes to the customer's address
-   (`replyTo`).
+   (`replyTo`); reply to the confirmation and confirm it goes to the studio.
 
 To confirm failures are surfaced rather than swallowed, temporarily unset
 `RESEND_TO_EMAIL` and submit again: the form must show the failure state and

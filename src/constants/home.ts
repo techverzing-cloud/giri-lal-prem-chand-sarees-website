@@ -222,8 +222,8 @@ export const PROCESS_STEPS = [
 export const TESTIMONIALS = [
   {
     id: 't1',
-    name: 'Priya Sharma',
-    location: 'Mumbai',
+    name: 'Amita Sharma',
+    location: 'New Delhi',
     rating: 5,
     text: 'The craftsmanship of the Banarasi saree I purchased is beyond compare. Every time I wear it, I receive endless compliments. Truly a heirloom piece.',
     image: '/testimonials/client-1.jpg',
@@ -231,7 +231,7 @@ export const TESTIMONIALS = [
   },
   {
     id: 't2',
-    name: 'Ananya Gupta',
+    name: 'Saumya',
     location: 'Delhi',
     rating: 5,
     text: 'My wedding lehenga from Arunima Fashions was a dream come true. The attention to detail, the fit, the fabric — everything was perfect. Thank you for making my day so special.',
@@ -240,8 +240,8 @@ export const TESTIMONIALS = [
   },
   {
     id: 't3',
-    name: 'Riya Mehta',
-    location: 'Bangalore',
+    name: 'Riya Malhotra',
+    location: 'Noida, Uttar Pradesh',
     rating: 5,
     text: 'I have been a loyal customer for over a decade. The consistency in quality and the warmth of the team keeps me coming back. Giri Lal Prem Chand Sarees is not just a store — it is a legacy.',
     image: '/testimonials/client-3.jpg',
@@ -250,7 +250,7 @@ export const TESTIMONIALS = [
   {
     id: 't4',
     name: 'Neha Kapoor',
-    location: 'London',
+    location: 'Jaipur, Rajasthan',
     rating: 5,
     text: 'Even from across the world, the team made sure I found the perfect saree for my sister\'s wedding. Seamless experience and exceptional quality.',
     image: '/testimonials/client-4.jpg',

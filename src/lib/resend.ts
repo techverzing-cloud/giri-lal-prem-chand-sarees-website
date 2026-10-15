@@ -1,9 +1,15 @@
 import { Resend } from 'resend'
 import type { EnquiryPayload } from '@/types/enquiry'
+import { TYPE_LABELS } from '@/emails/theme'
 import {
   EnquiryNotificationEmail,
   enquiryNotificationText,
 } from '@/emails/EnquiryNotificationEmail'
+import {
+  EnquiryConfirmationEmail,
+  enquiryConfirmationSubject,
+  enquiryConfirmationText,
+} from '@/emails/EnquiryConfirmationEmail'
 
 /**
  * Server-only Resend client.
@@ -19,6 +25,10 @@ import {
  *
  * Nothing here invents a default address: if a variable is missing the route
  * returns 503 rather than sending from a placeholder sender.
+ *
+ * Two messages are sent per enquiry: the studio notification
+ * (`sendEnquiryNotification`) and, when the visitor left an email address, the
+ * customer confirmation (`sendEnquiryConfirmation`).
  */
 
 const apiKey = process.env.RESEND_API_KEY
@@ -40,15 +50,6 @@ export function isEmailServiceConfigured(): boolean {
   return getEmailConfigProblem() === null
 }
 
-const TYPE_LABELS: Record<EnquiryPayload['type'], string> = {
-  PRODUCT: 'Product enquiry',
-  CONSULTATION: 'Consultation request',
-  CONTACT: 'Contact form',
-  BULK_ORDER: 'Bulk order',
-  CUSTOM_DESIGN: 'Custom design',
-  CORPORATE: 'Corporate enquiry',
-}
-
 function buildSubject(payload: EnquiryPayload): string {
   const label = TYPE_LABELS[payload.type] ?? 'Enquiry'
   const who = payload.customer.name?.trim() || 'Website visitor'
@@ -60,24 +61,69 @@ export interface SendResult {
   id: string
 }
 
+/** Resolved, guaranteed-present configuration. Throws `EmailConfigError`. */
+interface EmailConfig {
+  client: Resend
+  from: string
+  studio: string
+}
+
+function requireConfig(): EmailConfig {
+  const problem = getEmailConfigProblem()
+  if (problem || !resend || !fromEmail || !toEmail) {
+    throw new EmailConfigError(problem ?? 'RESEND_API_KEY')
+  }
+  return { client: resend, from: fromEmail, studio: toEmail }
+}
+
 /**
  * Sends the business notification. Throws `EmailConfigError` when the server is
  * not configured and `EmailDeliveryError` when Resend rejects the message.
  */
 export async function sendEnquiryNotification(payload: EnquiryPayload): Promise<SendResult> {
-  const problem = getEmailConfigProblem()
-  if (problem || !resend || !fromEmail || !toEmail) {
-    throw new EmailConfigError(problem ?? 'RESEND_API_KEY')
-  }
+  const { client, from, studio } = requireConfig()
 
-  const { data, error } = await resend.emails.send({
-    from: fromEmail,
-    to: toEmail,
+  const { data, error } = await client.emails.send({
+    from: from,
+    to: studio,
     // Replying goes straight to the customer, so the team can respond in-thread.
     replyTo: payload.customer.email || undefined,
     subject: buildSubject(payload),
     html: EnquiryNotificationEmail(payload),
     text: enquiryNotificationText(payload),
+  })
+
+  if (error) {
+    throw new EmailDeliveryError(error.message)
+  }
+
+  if (!data?.id) {
+    throw new EmailDeliveryError('Resend returned no message id')
+  }
+
+  return { id: data.id }
+}
+
+/**
+ * Sends the acknowledgement to the visitor who submitted the enquiry.
+ *
+ * Skipped (rather than failed) when the visitor left the email field blank, and
+ * never sends a price or any internal attribution data — see the template.
+ * Replies reach the studio because `replyTo` points at `RESEND_TO_EMAIL`.
+ */
+export async function sendEnquiryConfirmation(payload: EnquiryPayload): Promise<SendResult | null> {
+  const to = payload.customer?.email?.trim()
+  if (!to) return null
+
+  const { client, from, studio } = requireConfig()
+
+  const { data, error } = await client.emails.send({
+    from: from,
+    to,
+    replyTo: studio,
+    subject: enquiryConfirmationSubject(payload),
+    html: EnquiryConfirmationEmail(payload),
+    text: enquiryConfirmationText(payload),
   })
 
   if (error) {

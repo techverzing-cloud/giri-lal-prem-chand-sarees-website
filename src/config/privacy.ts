@@ -184,7 +184,8 @@ export const PERSONAL_DATA_COLLECTED: {
   {
     item: 'Email address',
     where: 'Enquiry, contact and product enquiry forms',
-    purpose: 'To reply to you. Used as the reply-to address on enquiry emails.',
+    purpose:
+      'To reply to you, and to send you a short confirmation that we received your enquiry. Also used as the reply-to address on the studio notification.',
     required: true,
   },
   {
